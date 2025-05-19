@@ -1,79 +1,79 @@
 ---
-description: components and formatting examples used in Docker's docs
-title: Lists
+description: Docker 文档中使用的组件和格式示例
+title: 列表
 toc_max: 3
 ---
 
-## Examples
+## 示例
 
-Use dashes (`-`) or asterisks (`*`) for bullet points.
+使用破折号（`-`）或星号（`*`）作为项目符号。
 
-- Bullet list item 1
-- Bullet list item 2
-- Bullet list item 3
+- 项目符号列表项 1
+- 项目符号列表项 2
+- 项目符号列表项 3
 
-1.  Numbered list item 1. Two spaces between the period and the first letter
-    helps with alignment.
+1.  编号列表项 1。句点和第一个字母之间的两个空格
+    有助于对齐。
 
-2.  Numbered list item 2. Let's put a note in it.
+2.  编号列表项 2。让我们在其中添加一个注释。
 
-    > [!NOTE]: We did it!
+    > [!NOTE]: 我们做到了！
 
-3.  Numbered list item 3 with a code block in it. You need the blank line before
-    the code block happens.
+3.  编号列表项 3，其中包含代码块。在代码块之前
+    需要一个空行。
 
     ```bash
     $ docker run hello-world
     ```
 
-4.  Numbered list item 4 with a bullet list inside it and a numbered list
-    inside that.
+4.  编号列表项 4，其中包含项目符号列表和
+    一个编号列表。
 
-    - Sub-item 1
-    - Sub-item 2
+    - 子项 1
+    - 子项 2
 
-      1.  Sub-sub-item 1
-      2.  Sub-sub-item-2 with a table inside it because we like to party!
-          Indentation is super important.
+      1.  子子项 1
+      2.  子子项 2，其中包含一个表格，因为我们喜欢热闹！
+          缩进非常重要。
 
-          | Header 1 | Header 2 |
+          | 表头 1 | 表头 2 |
           | -------- | -------- |
-          | Thing 1  | Thing 2  |
-          | Thing 3  | Thing 4  |
+          | 内容 1  | 内容 2  |
+          | 内容 3  | 内容 4  |
 
 ## Markdown
 
-````md
-- Bullet list item 1
-- Bullet list item 2
-- Bullet list item 3
+```md
+- 项目符号列表项 1
+- 项目符号列表项 2
+- 项目符号列表项 3
 
-1.  Numbered list item 1. Two spaces between the period and the first letter
-    helps with alignment.
+1.  编号列表项 1。句点和第一个字母之间的两个空格
+    有助于对齐。
 
-2.  Numbered list item 2. Let's put a note in it.
+2.  编号列表项 2。让我们在其中添加一个注释。
 
-    > [!NOTE]: We did it!
+    > [!NOTE]: 我们做到了！
 
-3.  Numbered list item 3 with a code block in it. You need the blank line before
-    the code block happens.
+3.  编号列表项 3，其中包含代码块。在代码块之前
+    需要一个空行。
 
     ```bash
     $ docker run hello-world
     ```
 
-4.  Numbered list item 4 with a bullet list inside it and a numbered list
-    inside that.
+4.  编号列表项 4，其中包含项目符号列表和
+    一个编号列表。
 
-    - Sub-item 1
-    - Sub-item 2
+    - 子项 1
+    - 子项 2
 
-      1.  Sub-sub-item 1
-      2.  Sub-sub-item-2 with a table inside it.
-          Indentation is super important.
+      1.  子子项 1
+      2.  子子项 2，其中包含一个表格。
+          缩进非常重要。
 
-          | Header 1 | Header 2 |
+          | 表头 1 | 表头 2 |
           | -------- | -------- |
-          | Thing 1  | Thing 2  |
-          | Thing 3  | Thing 4  |
-````
+          | 内容 1  | 内容 2  |
+          | 内容 3  | 内容 4  |
+```

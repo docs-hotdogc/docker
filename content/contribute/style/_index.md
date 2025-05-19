@@ -1,6 +1,6 @@
 ---
 build:
   render: never
-title: Style guide
+title: 风格指南
 weight: 20
 ---

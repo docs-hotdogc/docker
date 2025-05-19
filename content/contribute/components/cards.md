@@ -1,97 +1,97 @@
 ---
-description: components and formatting examples used in Docker's docs
-title: Cards
+description: Docker 文档中使用的组件和格式示例
+title: 卡片
 toc_max: 3
 grid:
 - title: Docker Desktop
-  description: Docker on your Desktop.
+  description: 桌面版 Docker。
   icon: install_desktop
   link: /desktop/
 - title: Docker Engine
-  description: Vrrrrooooommm
+  description: 强大的引擎
   icon: developer_board
   link: /engine/
 - title: Docker Build
-  description: Clang bang
+  description: 构建工具
   icon: build
   link: /build/
 - title: Docker Compose
-  description: Figgy!
+  description: 编排工具
   icon: account_tree
   link: /compose/
 - title: Docker Hub
-  description: so much content, oh wow
+  description: 丰富的内容库
   icon: hub
   link: /docker-hub/
 ---
 
-Cards can be added to a page using the `card` shortcode.
-The parameters for this shortcode are:
+可以使用 `card` 简码将卡片添加到页面中。
+此简码的参数包括：
 
-| Parameter   | Description                                                          |
-| ----------- | -------------------------------------------------------------------- |
-| title       | The title of the card                                                |
-| icon        | The icon slug of the card                                            |
-| image       | Use a custom image instead of an icon (mutually exclusive with icon) |
-| link        | (Optional) The link target of the card, when clicked                 |
-| description | A description text, in Markdown                                      |
+| 参数        | 描述                                                     |
+| ----------- | -------------------------------------------------------- |
+| title       | 卡片标题                                                 |
+| icon        | 卡片图标标识                                             |
+| image       | 使用自定义图片替代图标（与 icon 互斥）                  |
+| link        | （可选）点击卡片时的链接目标                            |
+| description | Markdown 格式的描述文本                                  |
 
 > [!NOTE]
 >
-> There's a known limitation with the Markdown description of cards,
-> in that they can't contain relative links, pointing to other .md documents.
-> Such links won't render correctly. Instead, use an absolute link to the URL
-> path of the page that you want to link to.
+> 卡片的 Markdown 描述存在一个已知限制，
+> 即它们不能包含相对链接（指向其他 .md 文档的链接）。
+> 此类链接无法正确渲染。相反，请使用您要链接到的页面的
+> 绝对 URL 路径。
 >
-> For example, instead of linking to `../install/linux.md`, write:
-> `/engine/install/linux/`.
+> 例如，不要链接到 `../install/linux.md`，而是写成：
+> `/engine/install/linux/`。
 
-## Example
+## 示例
 
 {{< card
-  title="Get your Docker on"
+  title="开始使用 Docker"
   icon=favorite
   link=https://docs.docker.com/
-  description="Build, share, and run your apps with Docker" >}}
+  description="使用 Docker 构建、共享和运行您的应用程序" >}}
 
-## Markup
+## 标记语法
 
 ```go
 {{</* card
-  title="Get your Docker on"
+  title="开始使用 Docker"
   icon=favorite
   link=https://docs.docker.com/
-  description="Build, share, and run your apps with Docker"
+  description="使用 Docker 构建、共享和运行您的应用程序"
 */>}}
 ```
 
-### Grid
+### 网格
 
-There's also a built-in `grid` shortcode that generates a... well, grid... of cards.
-The grid size is 3x3 on large screens, 2x2 on medium, and single column on small.
+还有一个内置的 `grid` 简码，用于生成卡片网格。
+在大屏幕上网格大小为 3x3，在中等屏幕上为 2x2，在小屏幕上为单列。
 
 {{< grid >}}
 
-Grid is a separate shortcode from `card`, but it implements the same component under the hood.
-The markup you use to insert a grid is slightly unconventional. The grid shortcode takes no arguments.
-All it does is let you specify where on a page you want your grid to appear.
+网格是一个独立于 `card` 的简码，但在底层实现了相同的组件。
+插入网格的标记语法略有不同。网格简码不需要任何参数。
+它只是让您指定想要在页面上何处显示网格。
 
 ```go
 {{</* grid */>}}
 ```
 
-The data for the grid is defined in the front matter of the page, under the `grid` key, as follows:
+网格的数据在页面的前置信息中的 `grid` 键下定义，如下所示：
 
 ```yaml
-# front matter section of a page
-title: some page
+# 页面的前置信息部分
+title: 某个页面
 grid:
   - title: "Docker Engine"
-    description: Vrrrrooooommm
+    description: 强大的引擎
     icon: "developer_board"
     link: "/engine/"
   - title: "Docker Build"
-    description: Clang bang
+    description: 构建工具
     icon: "build"
     link: "/build/"
 ```

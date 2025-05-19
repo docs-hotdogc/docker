@@ -1,27 +1,26 @@
 ---
-description: components and formatting examples used in Docker's docs
-title: Links
+description: Docker 文档中使用的组件和格式示例
+title: 链接
 toc_max: 3
 ---
 
-## Examples
+## 示例
 
-- [External links](https://docker.com) open in a new tab
-- [Internal links](links.md) open in the same tab
+- [外部链接](https://docker.com) 在新标签页中打开
+- [内部链接](links.md) 在当前标签页中打开
 
-You can use relative links, using source filenames,
-or you can use absolute links for pages as they appear on the final site.
+您可以使用相对链接（使用源文件名），
+也可以使用绝对链接（使用最终网站中的页面路径）。
 
-#### Links to auto-generated content
+#### 链接到自动生成的内容
 
-When you link to heading IDs in auto-generated pages, such as CLI reference content,
-you won't get any help from your editor in resolving the anchor names. That's
-because the pages are generated at build-time and your editor or LSP doesn't know
-about them in advance.
+当您链接到自动生成页面中的标题 ID（如 CLI 参考内容）时，
+您的编辑器不会帮助您解析锚点名称。这是因为这些页面
+是在构建时生成的，您的编辑器或 LSP 无法预先知道它们。
 
-## Syntax
+## 语法
 
 ```md
-[External links](https://docker.com)
-[Internal links](links.md)
+[外部链接](https://docker.com)
+[内部链接](links.md)
 ```

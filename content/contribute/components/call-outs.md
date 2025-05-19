@@ -1,103 +1,85 @@
 ---
-description: components and formatting examples used in Docker's docs
-title: Callouts
+description: Docker 文档中使用的组件和格式示例
+title: 提示框
 toc_max: 3
 ---
 
-We support these broad categories of callouts:
+我们支持以下几大类提示框：
 
-- Alerts: Note, Tip, Important, Warning, Caution
+- 警示：注意、提示、重要、警告、谨慎
 
-We also support summary bars, which represent a feature's required subscription, version, or Adminstrator role.
-To add a summary bar:
+我们还支持摘要栏，用于表示功能所需的订阅、版本或管理员角色。
+要添加摘要栏：
 
-Add the feature name to the `/data/summary.yaml` file. Use the following attributes:
+将功能名称添加到 `/data/summary.yaml` 文件中。使用以下属性：
 
-| Attribute      | Description                                            | Possible values                                         |
-|----------------|--------------------------------------------------------|---------------------------------------------------------|
-| `subscription` | Notes the subscription required to use the feature     | All, Personal, Pro, Team, Business                      |
-| `availability` | Notes what product development stage the feature is in | Experimental, Beta, Early Access, GA, Retired           |
-| `requires`     | Notes what minimum version is required for the feature | No specific value, use a string to describe the version and link to relevant release notes |
-| `for`          | Notes if the feature is intended for IT Administrators | Administrators                                          |
+| 属性          | 描述                                              | 可能的值                                            |
+|--------------|--------------------------------------------------|--------------------------------------------------|
+| `subscription` | 记录使用该功能所需的订阅级别                       | All（全部）, Personal（个人）, Pro（专业）, Team（团队）, Business（企业） |
+| `availability` | 记录该功能所处的产品开发阶段                       | Experimental（实验性）, Beta（测试版）, Early Access（早期访问）, GA（正式发布）, Retired（已停用） |
+| `requires`     | 记录该功能所需的最低版本                           | 无特定值，使用字符串描述版本并链接到相关发行说明 |
+| `for`          | 记录该功能是否面向 IT 管理员                      | Administrators（管理员）                            |
 
-Then, add the `summary-bar` shortcode on the page you want to add the summary bar to. Note, the feature name is case sensitive. The icons that appear in the summary bar are automatically rendered.
+然后，在要添加摘要栏的页面上添加 `summary-bar` 简码。注意，功能名称区分大小写。摘要栏中显示的图标会自动渲染。
 
-## Examples
+## 示例
 
-{{< summary-bar feature_name="PKG installer" >}}
+{{< summary-bar feature_name="PKG 安装程序" >}}
 
 > [!NOTE]
 >
-> Note the way the `get_hit_count` function is written. This basic retry
-> loop lets us attempt our request multiple times if the redis service is
-> not available. This is useful at startup while the application comes
-> online, but also makes our application more resilient if the Redis
-> service needs to be restarted anytime during the app's lifetime. In a
-> cluster, this also helps handling momentary connection drops between
-> nodes.
+> 注意 `get_hit_count` 函数的编写方式。这个基本的重试循环让我们可以在 redis 服务不可用时多次尝试请求。这在应用程序启动过程中很有用，同时也使得我们的应用程序在 Redis 服务需要在应用程序生命周期内的任何时候重启时更具弹性。在集群中，这也有助于处理节点之间的瞬时连接断开。
 
 > [!TIP]
 >
-> For a smaller base image, use `alpine`.
+> 要获得更小的基础镜像，请使用 `alpine`。
 
 > [!IMPORTANT]
 >
-> Treat access tokens like your password and keep them secret. Store your
-> tokens securely (for example, in a credential manager).
+> 像对待密码一样对待访问令牌并保持其机密性。安全地存储您的令牌（例如，使用凭据管理器）。
 
 > [!WARNING]
 >
-> Removing Volumes
+> 移除卷
 >
-> By default, named volumes in your compose file are NOT removed when running
-> `docker compose down`. If you want to remove the volumes, you will need to add
-> the `--volumes` flag.
+> 默认情况下，运行 `docker compose down` 时不会移除 compose 文件中的命名卷。如果您想要移除卷，需要添加 `--volumes` 标志。
 >
-> The Docker Desktop Dashboard does not remove volumes when you delete the app stack.
+> Docker Desktop 仪表板在删除应用栈时不会移除卷。
 
 > [!CAUTION]
 >
-> Here be dragons.
+> 此处危险。
 
-For both of the following callouts, consult [the Docker release lifecycle](/release-lifecycle) for more information on when to use them.
+对于以下两个提示框，请查阅 [Docker 发布生命周期](/release-lifecycle) 以获取更多关于何时使用它们的信息。
 
-## Formatting
+## 格式化
 
 ```md
-{{</* summary-bar feature_name="PKG installer" */>}}
+{{</* summary-bar feature_name="PKG 安装程序" */>}}
 ```
 
 ```html
 > [!NOTE]
 >
-> Note the way the `get_hit_count` function is written. This basic retry
-> loop lets us attempt our request multiple times if the redis service is
-> not available. This is useful at startup while the application comes
-> online, but also makes our application more resilient if the Redis
-> service needs to be restarted anytime during the app's lifetime. In a
-> cluster, this also helps handling momentary connection drops between
-> nodes.
+> 注意 `get_hit_count` 函数的编写方式。这个基本的重试循环让我们可以在 redis 服务不可用时多次尝试请求。这在应用程序启动过程中很有用，同时也使得我们的应用程序在 Redis 服务需要在应用程序生命周期内的任何时候重启时更具弹性。在集群中，这也有助于处理节点之间的瞬时连接断开。
 
 > [!TIP]
 >
-> For a smaller base image, use `alpine`.
+> 要获得更小的基础镜像，请使用 `alpine`。
 
 > [!IMPORTANT]
 >
-> Treat access tokens like your password and keep them secret. Store your
-> tokens securely (for example, in a credential manager).
+> 像对待密码一样对待访问令牌并保持其机密性。安全地存储您的令牌（例如，使用凭据管理器）。
 
 > [!WARNING]
 >
-> Removing Volumes
+> 移除卷
 >
-> By default, named volumes in your compose file are NOT removed when running
-> `docker compose down`. If you want to remove the volumes, you will need to add
-> the `--volumes` flag.
+> 默认情况下，运行 `docker compose down` 时不会移除 compose 文件中的命名卷。如果您想要移除卷，需要添加 `--volumes` 标志。
 >
-> The Docker Desktop Dashboard does not remove volumes when you delete the app stack.
+> Docker Desktop 仪表板在删除应用栈时不会移除卷。
 
 > [!CAUTION]
 >
-> Here be dragons.
+> 此处危险。
 ```

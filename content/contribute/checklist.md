@@ -1,55 +1,55 @@
 ---
-title: Writing checklist
-description: A helpful writing checklist when creating documentation
-keywords: checklist, documentation, style guide, contribute
+title: 写作清单
+description: 创建文档时的实用写作清单
+keywords: 清单, 文档, 风格指南, 贡献
 weight: 60
 ---
 
-Use this checklist to communicate in a way that is clear, helpful, and consistent with the rest of Docker Docs.
+使用这个清单来以清晰、有帮助且与 Docker 文档保持一致的方式进行写作。
 
-##### Used active voice
+##### 使用主动语态
 
-Active voice is specific and removes ambiguity.
+主动语态更加具体，可以消除歧义。
 
-In active voice, the subject of the sentence (the customer or the system) does the action.
+在主动语态中，句子的主语（客户或系统）执行动作。
 
-Sentences that use active voice are easier to read. Active voice makes it clear who has done what and to whom. Plus, active voice keeps sentences direct and more concise.
+使用主动语态的句子更容易阅读。主动语态能清楚地表明谁对谁做了什么。此外，主动语态使句子更直接、更简洁。
 
-Helping verbs such as is, was, or would may indicate that you're writing in passive voice. And, if you can add the phrase 'by zombies' after the verb, you're writing in the passive voice.
+助动词如"是"、"被"或"将"可能表明你在使用被动语态。如果你可以在动词后面加上"被某人"这样的短语，那么你就是在使用被动语态。
 
-|Correct| Incorrect|
+|正确| 错误|
 |:--|:--|
-|Increase productivity with Docker Desktop.| Productivity can be increased (by zombies) with Docker Desktop.|
-|If you remove items from a grid, charts automatically refresh to display the change. | If items are removed (by zombies) from a grid, charts automatically refresh to display the change.|
+|使用 Docker Desktop 提高生产力。| 生产力可以被（某人）通过 Docker Desktop 提高。|
+|如果你从网格中删除项目，图表会自动刷新以显示更改。 | 如果项目被（某人）从网格中删除，图表会自动刷新以显示更改。|
 
-##### Written clear sentences that get to the point
+##### 写出简明扼要的句子
 
-Write short, concise sentences. Punchy sentences are faster to read and easier to understand.
+写短小、简洁的句子。简洁的句子更容易阅读和理解。
 
-##### Used subheadings and bulleted lists to break up the page
+##### 使用子标题和项目符号列表来分割页面
 
-This helps find the information they need quickly and easily.
+这有助于读者快速且轻松地找到所需的信息。
 
-For more information, see the [formatting](style/formatting.md#headings-and-subheadings) page, or see the [components](components/lists.md) for examples.
+更多信息，请参阅[格式化](style/formatting.md#headings-and-subheadings)页面，或查看[组件](components/lists.md)示例。
 
-##### Started the title of your page with a verb
+##### 页面标题以动词开头
 
-For example, 'Install Docker Desktop'.
+例如，"安装 Docker Desktop"。
 
-##### Checked that the left-hand table of contents title in docs.docker.com, matches the title displayed on the page
+##### 检查 docs.docker.com 左侧目录中的标题是否与页面显示的标题一致
 
-##### Checked for broken links and images
+##### 检查链接和图片是否损坏
 
-Use relative links to link to other pages or images within the GitHub repository.
+使用相对链接来链接 GitHub 仓库中的其他页面或图片。
 
-For more information, see the [formatting](style/formatting.md#links) page, or see the [components](components/links.md) for examples.
+更多信息，请参阅[格式化](style/formatting.md#links)页面，或查看[组件](components/links.md)示例。
 
-##### Checked that any redirects you may have added, work
+##### 检查你添加的任何重定向是否有效
 
-For information on how to add redirects, see [Source file conventions](file-conventions.md#front-matter).
+有关如何添加重定向的信息，请参阅[源文件约定](file-conventions.md#front-matter)。
 
-##### Used bold on any UI elements you refer to in your content
+##### 在提到 UI 元素时使用粗体
 
-##### Completed a final spelling, punctuation, and grammar check
+##### 完成最终的拼写、标点和语法检查
 
-For more in-depth information on our Style Guide, explore the [grammar](style/grammar.md) or [formatting](style/formatting.md) guides.
+要了解更多关于我们风格指南的深入信息，请探索[语法](style/grammar.md)或[格式化](style/formatting.md)指南。

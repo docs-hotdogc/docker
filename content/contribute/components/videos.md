@@ -1,36 +1,35 @@
 ---
-description: Learn about guidelines and best practices for videos in docs, and how to add a video component.
-title: Videos
+description: 了解文档中视频的指南和最佳实践，以及如何添加视频组件。
+title: 视频
 toc_max: 3
 ---
 
-## Video guidelines
+## 视频指南
 
-Videos are used rarely in Docker's documentation. When used, video should complement written text and not be the sole format of documentation. Videos can take longer to produce and be more difficult to maintain than written text or even screenshots, so consider the following before adding video:
+在 Docker 的文档中很少使用视频。使用时，视频应该补充书面文本而不是作为文档的唯一格式。视频制作可能比编写文本甚至截图需要更长的时间，并且维护起来更困难，因此在添加视频之前请考虑以下几点：
 
-- Can you demonstrate a clear customer need for using video?
-- Does the video offer new content, rather than directly reading or re-purposing official documentation?
-- If the video contains user interfaces that may change regularly, do you have a maintenance plan to keep the video fresh?
-- Does the [voice and tone](../style/voice-tone.md) of the video align with the rest of the documentation?
-- Have you considered other options, such as screenshots or clarifying existing documentation?
-- Is the quality of the video similar to the rest of Docker's documentation?
-- Can the video be linked or embedded from the site?
+- 您能否证明使用视频的明确用户需求？
+- 视频是否提供新内容，而不是直接阅读或重新利用官方文档？
+- 如果视频包含可能经常变化的用户界面，您是否有维护计划来保持视频的时效性？
+- 视频的[语气和语调](../style/voice-tone.md)是否与其他文档保持一致？
+- 您是否考虑过其他选项，比如截图或澄清现有文档？
+- 视频质量是否与其他 Docker 文档类似？
+- 视频是否可以在网站上链接或嵌入？
 
-If all of the above criteria are met, you can reference the following best practices before creating a video to add to Docker documentation.
+如果满足以上所有标准，您可以在创建要添加到 Docker 文档中的视频之前参考以下最佳实践。
 
-### Best practices
+### 最佳实践
 
-- Determine the audience for your video. Will the video be a broad overview for beginners, or will it be a deep dive into a technical process designed for an advanced user?
-- Videos should be less than 5 minutes long. Keep in mind how long the video needs to be to properly explain the topic, and if the video needs to be longer than 5 minutes, consider text, diagrams, or screenshots instead. These are easier for a user to scan for relevant information.
-- Videos should adhere to the same standards for accessibility as the rest of the documentation.
-- Ensure the quality of your video by writing a script (if there's narration), making sure multiple browsers and URLs aren't visible, blurring or cropping out any sensitive information, and using smooth transitions between different browsers or screens.
+- 确定视频的受众。视频是面向初学者的广泛概述，还是面向高级用户的技术过程深入探讨？
+- 视频应少于 5 分钟。记住视频需要多长时间来正确解释主题，如果视频需要超过 5 分钟，请考虑使用文本、图表或截图替代。这些更容易让用户扫描相关信息。
+- 视频应遵守与其他文档相同的可访问性标准。
+- 通过编写脚本（如果有旁白）、确保不显示多个浏览器和 URL、模糊或裁剪任何敏感信息，以及在不同浏览器或屏幕之间使用平滑过渡来确保视频质量。
 
-Videos are not hosted in the Docker documentation repository. To add a video, you can use a [link](./links.md) to hosted content, or embed using an [iframe](#iframe).
-
+视频不在 Docker 文档仓库中托管。要添加视频，您可以使用[链接](./links.md)到托管的内容，或使用 [iframe](#iframe) 嵌入。
 
 ## iframe
 
-To embed a video on a docs page, use an `<iframe>` element:
+要在文档页面中嵌入视频，请使用 `<iframe>` 元素：
 
 ```html
 <iframe
@@ -43,24 +42,19 @@ To embed a video on a docs page, use an `<iframe>` element:
 
 ## asciinema
 
-`asciinema` is a command line tool for recording terminal sessions. The
-recordings can be embedded on the documentation site. These are similar to
-`console` code blocks, but since they're playable and scrubbable videos, they
-add another level of usefulness over static codeblocks in some cases. Text in
-an `asciinema` "video" can also be copied, which makes them more useful.
+`asciinema` 是一个用于录制终端会话的命令行工具。这些录制内容可以嵌入到文档网站中。它们类似于 `console` 代码块，但由于它们是可播放和可拖动的视频，在某些情况下比静态代码块增添了一层实用性。`asciinema` "视频"中的文本也可以复制，这使它们更有用。
 
-Consider using an `asciinema` recording if:
+考虑使用 `asciinema` 录制，如果：
 
-- The input/output of the terminal commands are too long for a static example
-  (you could also consider truncating the output)
-- The steps you want to show are easily demonstrated in a few commands
-- Where the it's useful to see both inputs and outputs of commands
+- 终端命令的输入/输出对于静态示例来说太长（您也可以考虑截断输出）
+- 您要显示的步骤可以通过几个命令轻松演示
+- 在需要看到命令的输入和输出的情况下很有用
 
-To create an `asciinema` recording and add it to docs:
+要创建 `asciinema` 录制并添加到文档中：
 
-1. [Install](https://docs.asciinema.org/getting-started/) the `asciinema` CLI
-2. Run `asciinema auth` to configure your client and create an account
-3. Start a new recording with `asciinema rec`
-4. Run the commands for your demo and stop the recording with `<C-d>` or `exit`
-5. Upload the recording to <asciinema.org>
-6. Embed the player with a `<script>` tag using the **Share** button on <asciinema.org>
+1. [安装](https://docs.asciinema.org/getting-started/) `asciinema` CLI
+2. 运行 `asciinema auth` 配置您的客户端并创建账户
+3. 使用 `asciinema rec` 开始新录制
+4. 运行演示的命令，并使用 `<C-d>` 或 `exit` 停止录制
+5. 将录制上传到 <asciinema.org>
+6. 使用 <asciinema.org> 上的 **Share** 按钮通过 `<script>` 标签嵌入播放器

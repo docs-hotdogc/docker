@@ -1,40 +1,40 @@
 ---
-description: components and formatting examples used in Docker's docs
-title: Images
+description: Docker 文档中使用的组件和格式示例 
+title: 图片
 toc_max: 3
 ---
 
-## Example
+## 示例
 
-- A small image: ![a small image](/assets/images/footer_moby_icon.png)
+- 小图片：![一个小图片](/assets/images/footer_moby_icon.png)
 
-- Large images occupy the full width of the reading column by default:
+- 大图片默认占据阅读列的全宽：
 
-  ![a pretty wide image](/assets/images/banner_image_24512.png)
+  ![一个相当宽的图片](/assets/images/banner_image_24512.png)
 
-- Image size can be set using query parameters: `?h=<height>&w=<width>`
+- 图片大小可以使用查询参数设置：`?h=<height>&w=<width>`
 
-  ![a pretty wide image](/assets/images/banner_image_24512.png?w=100&h=50)
+  ![一个相当宽的图片](/assets/images/banner_image_24512.png?w=100&h=50)
 
-- Image with a border, also set with a query parameter: `?border=true`
+- 带边框的图片，同样使用查询参数设置：`?border=true`
 
-  ![a small image](/assets/images/footer_moby_icon.png?border=true)
+  ![一个小图片](/assets/images/footer_moby_icon.png?border=true)
 
 
-## HTML and Markdown
+## HTML 和 Markdown
 
 ```markdown
-- A small image: ![a small image](/assets/images/footer_moby_icon.png)
+- 小图片：![一个小图片](/assets/images/footer_moby_icon.png)
 
-- Large images occupy the full width of the reading column by default:
+- 大图片默认占据阅读列的全宽：
 
-  ![a pretty wide image](/assets/images/banner_image_24512.png)
+  ![一个相当宽的图片](/assets/images/banner_image_24512.png)
 
-- Image size can be set using query parameters: `?h=<height>&w=<width>`
+- 图片大小可以使用查询参数设置：`?h=<height>&w=<width>`
 
-  ![a pretty wide image](/assets/images/banner_image_24512.png?w=100&h=50)
+  ![一个相当宽的图片](/assets/images/banner_image_24512.png?w=100&h=50)
 
-- Image with a border, also set with a query parameter: `?border=true`
+- 带边框的图片，同样使用查询参数设置：`?border=true`
 
-  ![a small image](/assets/images/footer_moby_icon.png?border=true)
+  ![一个小图片](/assets/images/footer_moby_icon.png?border=true)
 ```

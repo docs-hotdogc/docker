@@ -1,176 +1,176 @@
 ---
-title: Formatting guide
-description: Formatting guidelines for technical documentation
-keywords: formatting, style guide, contribute
+title: 格式指南
+description: 技术文档的格式指南
+keywords: 格式, 风格指南, 贡献
 toc_max: 2
 weight: 20
 ---
 
-## Headings and subheadings
+## 标题和副标题
 
-Readers pay fractionally more attention to headings, bulleted lists, and links, so it's important to ensure the first two to three words in those items "front load" information as much as possible.
+读者会对标题、项目符号列表和链接给予更多关注，因此确保这些项目的前两到三个词尽可能"前置"重要信息非常重要。
 
-### Best practice
+### 最佳实践
 
-- Headings and subheadings should let the reader know what they will find on the page.
-- They should describe succinctly and accurately what the content is about.
-- Headings should be short (no more than eight words), to the point and written in plain, active language.
-- You should avoid puns, teasers, and cultural references.
-- Skip leading articles (a, the, etc.)
+- 标题和副标题应该让读者知道他们将在页面上找到什么。
+- 它们应该简洁准确地描述内容主题。
+- 标题应该简短（不超过八个字），直截了当，并使用简单的主动语言。
+- 您应该避免双关语、悬念和文化参考。
+- 跳过引导词（a、the 等）。
 
-## Page title
+## 页面标题
 
-Page titles should be action orientated. For example: - _Enable SCIM_ - _Install Docker Desktop_
+页面标题应该面向行动。例如：- _启用 SCIM_ - _安装 Docker Desktop_
 
-### Best practice
+### 最佳实践
 
-- Make sure the title of your page and the table of contents (TOC) entry matches.
-- If you want to use a ‘:’ in a page title in the table of contents (\_toc.yaml), you must wrap the entire title in “” to avoid breaking the build.
-- If you add a new entry to the TOC file, make sure it ends in a trailing slash (/). If you don't, the page won't show the side navigation.
+- 确保页面的标题与目录（TOC）条目一致。
+- 如果您想在目录（_toc.yaml）中的页面标题中使用 ':'，您必须用 "" 将整个标题包起来以避免破坏构建。
+- 如果您在目录文件中添加新条目，请确保它以斜杠（/）结尾。如果不这样做，页面将不会显示侧边导航。
 
-## Images
+## 图片
 
-Images, including screenshots, can help a reader better understand a concept. However, you should use them sparingly as they tend to go out-of-date.
+图片（包括截图）可以帮助读者更好地理解概念。但是，应该谨慎使用它们，因为它们容易过时。
 
-### Best practice
+### 最佳实践
 
-- When you take screenshots:
-  - Don’t use lorem ipsum text. Try to replicate how someone would use the feature in a real-world scenario, and use realistic text.
-  - Capture only the relevant UI. Don’t include unnecessary white space or areas of the UI that don’t help illustrate the point.
-  - Keep it small. If you don’t need to show the full width of the screen, don’t.
-  - Review how the image renders on the page. Make sure the image isn’t blurry or overwhelming.
-  - Be consistent. Coordinate screenshots with the other screenshots already on a documentation page for a consistent reading experience.
-  - To keep the Git repository light, compress the images (losslessly). Be sure to compress the images before adding them to the repository. Compressing images after adding them to the repository actually worsens the impact on the Git repository (however, it still optimizes the bandwidth during browsing).
-  - Don't forget to remove images from the repository that are no longer used.
+- 在拍摄截图时：
+  - 不要使用 lorem ipsum 文本。尝试复制用户在真实场景中如何使用功能，并使用真实文本。
+  - 只捕获相关的 UI。不要包含不必要的空白空间或不能帮助说明要点的 UI 区域。
+  - 保持小巧。如果不需要显示屏幕的全宽，就不要显示。
+  - 检查图片在页面上的渲染效果。确保图片不模糊或过于压迫。
+  - 保持一致性。与文档页面上的其他截图协调，以获得一致的阅读体验。
+  - 为了保持 Git 仓库轻量级，压缩图片（无损压缩）。确保在将图片添加到仓库之前进行压缩。在将图片添加到仓库后进行压缩实际上会加重对 Git 仓库的影响（但仍然可以优化浏览时的带宽）。
+  - 不要忘记从仓库中移除不再使用的图片。
 
-For information on how to add images to your content, see [Useful component and formatting examples](../components/images.md).
+有关如何在内容中添加图片的信息，请参阅[实用组件和格式示例](../components/images.md)。
 
-## Links
+## 链接
 
-Be careful not to create too many links, especially within body copy. Excess links can be distracting or send readers away from the current page.
+要小心不要创建太多链接，特别是在正文中。过多的链接可能会分散注意力或将读者引离当前页面。
 
-When people follow links, they can often lose their train of thought and fail to return to the original page, despite not having absorbed all the information it contains.
+当人们点击链接时，他们往往会失去思路，尽管没有吸收原始页面包含的所有信息，但也无法返回。
 
-The best links offer readers another way to scan information.
+最好的链接为读者提供了另一种浏览信息的方式。
 
-### Best practice
+### 最佳实践
 
-- Use plain language that doesn't mislead or promise too much.
-- Be short and descriptive (around five words is best).
-- Allow people to predict (with a fair degree of confidence) what they will get if they select a link. Mirror the heading text on the destination page in links whenever possible.
-- Front-load user-and-action-oriented terms at the beginning of the link (Download our app).
-- Avoid generic calls to action (such as click here, find out more).
-- Don't include any end punctuation when you hyperlink text (for example, periods, question marks, or exclamation points).
-- Don't make link text italics or bold, unless it would be so as normal body copy.
+- 使用不会误导或承诺太多的简单语言。
+- 要简短且具有描述性（大约五个词最佳）。
+- 让人们能够（相当有把握地）预测点击链接后会得到什么。链接文本应尽可能与目标页面的标题文本一致。
+- 在链接开头前置用户和行动导向术语（下载我们的应用）。
+- 避免使用通用号召性用语（如点击此处、了解更多）。
+- 当您创建超链接文本时，不要包含任何结尾标点（例如句号、问号或感叹号）。
+- 不要将链接文本设为斜体或粗体，除非它在正常正文中就应该如此。
 
-For information on how to add links to your content, see [Useful component and formatting examples](../components/links.md).
+有关如何在内容中添加链接的信息，请参阅[实用组件和格式示例](../components/links.md)。
 
-## Code and code samples
+## 代码和代码示例
 
-Format the following as code: Docker commands, instructions, and filenames (package names).
+将以下内容格式化为代码：Docker 命令、说明和文件名（包名）。
 
-To apply inline code style, wrap the text in a single backtick (`).
+要应用内联代码样式，请用单个反引号（`）包裹文本。
 
-For information on how to add code blocks to your content, see [Useful component and formatting examples](../components/code-blocks.md).
+有关如何在内容中添加代码块的信息，请参阅[实用组件和格式示例](../components/code-blocks.md)。
 
-### Best practice for commands
+### 命令的最佳实践
 
-- Command prompt and shell:
-  - For a non-privileged shell, prefix commands in code blocks with the $ prompt symbol.
-  - For a privileged shell, prefix commands in code blocks with the # prompt symbol.
-  - For a remote shell, add the context of the remote machine and exclude the path. For example, `user@host $`.
-  - Specify the Windows shell (Command Prompt, PowerShell, or Git Bash), when you add any Windows-specific command. It's not necessary to include a command for each Windows shell.
-  - Use tabs when you add commands for multiple operating systems or shells. For information on how to add tabs to your content, see [Tabs](../components/tabs.md).
-- Commands that users will copy and run:
-  - Add a single command per code block if a command produces output or requires the user to verify the results.
-  - Add command output to a separate code block from the command.
-- Commands that users won't copy and run:
-  - Use POSIX-compatible syntax. It's not necessary to include Windows syntax.
-  - Wrap optional arguments in square brackets ( [ ] ).
-  - Use pipes ( \| ) between mutually exclusive arguments.
-  - Use three dots ( ... ) after repeated arguments.
+- 命令提示符和 shell：
+  - 对于非特权 shell，在代码块中的命令前加上 $ 提示符号。
+  - 对于特权 shell，在代码块中的命令前加上 # 提示符号。
+  - 对于远程 shell，添加远程机器的上下文并排除路径。例如，`user@host $`。
+  - 添加任何 Windows 特定命令时，请指定 Windows shell（命令提示符、PowerShell 或 Git Bash）。没有必要为每个 Windows shell 都包含一个命令。
+  - 当您为多个操作系统或 shell 添加命令时，使用标签页。有关如何在内容中添加标签页的信息，请参阅[标签页](../components/tabs.md)。
+- 用户将复制和运行的命令：
+  - 如果命令会产生输出或需要用户验证结果，每个代码块添加一个命令。
+  - 将命令输出添加到与命令分开的代码块中。
+- 用户不会复制和运行的命令：
+  - 使用 POSIX 兼容语法。不需要包含 Windows 语法。
+  - 将可选参数用方括号（[ ]）包起来。
+  - 在互斥参数之间使用管道符（\|）。
+  - 在重复参数后使用三个点（...）。
 
-### Best practice for code
+### 代码的最佳实践
 
-- Indent code blocks by 3 spaces when you nest a code block under a list item.
-- Use three dots ( ... ) when you omit code.
+- 当您在列表项下嵌套代码块时，将代码块缩进 3 个空格。
+- 当您省略代码时使用三个点（...）。
 
-## Callouts
+## 提示框
 
-Use callouts to emphasize selected information on a page.
+使用提示框来强调页面上的选定信息。
 
-### Best practice
+### 最佳实践
 
-- Format the word Warning, Important, or Note in bold. Don't bold the content within the callout.
-- It's good practice to avoid placing a lot of text callouts on one page. They can create a cluttered appearance if used to excess, and you'll diminish their impact.
+- 将"警告"、"重要"或"注意"文字加粗。不要加粗提示框内的内容。
+- 最好避免在一个页面上放置太多文本提示框。过度使用会造成杂乱的外观，并且会降低它们的影响力。
 
-| Text callout | Use case scenario                                                                                                                                                                   | Color or callout box |
-| ------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------- |
-| Warning      | Use a Warning tag to signal to the reader where actions may cause damage to hardware or software loss of data.                                                                      | Red                  |
-|              | ✅ Example: Warning: When you use the docker login command, your credentials are stored in your home directory in .docker/config.json. The password is base64-encoded in this file. |                      |
-| Important    | Use an Important tag to signal to the reader where actions may cause issues of a lower magnitude.                                                                                   | Yellow               |
-|              | ✅ Example: Update to the Docker Desktop terms                                                                                                                                      |                      |
-| Note         | Use the Note tag for information that may not apply to all readers, or if the information is tangential to a topic.                                                                 | Blue                 |
-|              | ✅ Example: Deleting a repository deletes all the images it contains and its build settings. This action cannot be undone.                                                          |                      |
+| 文本提示框 | 使用场景                                                                                                                                                             | 颜色或提示框 |
+| ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------ |
+| 警告      | 使用警告标签向读者指出可能导致硬件损坏或软件数据丢失的操作。                                                                                                        | 红色        |
+|           | ✅ 示例：警告：当您使用 docker login 命令时，您的凭据会存储在主目录的 .docker/config.json 中。密码在此文件中是 base64 编码的。                                     |              |
+| 重要      | 使用重要标签向读者指出可能导致较低级别问题的操作。                                                                                                                  | 黄色        |
+|           | ✅ 示例：Docker Desktop 条款更新                                                                                                                                    |              |
+| 注意      | 使用注意标签标记可能不适用于所有读者的信息，或者与主题相关的附加信息。                                                                                              | 蓝色        |
+|           | ✅ 示例：删除仓库会删除其包含的所有镜像及其构建设置。此操作无法撤消。                                                                                              |              |
 
-For information on how to add callouts to your content, see [Useful component and formatting examples](../components/call-outs.md).
+有关如何在内容中添加提示框的信息，请参阅[实用组件和格式示例](../components/call-outs.md)。
 
-## Navigation
+## 导航
 
-When documenting how to navigate through the Docker Desktop or Docker Hub UI:
+在记录如何导航 Docker Desktop 或 Docker Hub UI 时：
 
-- Always use location, then action. For example:
-  _From the **Visibility** drop-down list (location), select Public (action)._
-- Be brief and specific. For example:
-  Do: _Select **Save**._
-  Don't: _Select **Save** for the changes to take effect._
-- If a step must include a reason, start the step with it. This helps the user scan more quickly.
-  Do: _To view the changes, in the merge request, select the link._
-  Don't: _Select the link in the merge request to view the changes_
+- 始终先说明位置，再说明动作。例如：
+  _从**可见性**下拉列表（位置）中，选择公开（动作）。_
+- 简洁明确。例如：
+  正确：_选择**保存**。_
+  错误：_选择**保存**使更改生效。_
+- 如果步骤必须包含原因，请从原因开始。这有助于用户更快地浏览。
+  正确：_要查看更改，在合并请求中，选择链接。_
+  错误：_在合并请求中选择链接以查看更改_
 
-## Optional steps
+## 可选步骤
 
-If a step is optional, start the step with the word Optional followed by a period.
+如果某个步骤是可选的，请在步骤开头加上"可选"一词，后跟句号。
 
-For example:
+例如：
 
-_1. Optional. Enter a description for the job._
+_1. 可选。为作业输入描述。_
 
-## Placeholder text
+## 占位符文本
 
-You might want to provide a command or configuration that uses specific values.
+您可能想要提供使用特定值的命令或配置。
 
-In these cases, use < and > to call out where a reader must replace text with their own value. For example:
+在这些情况下，使用 < 和 > 来标注读者必须用自己的值替换的文本。例如：
 
-`docker extension install <name-of-your-extension>`
+`docker extension install <your-extension-name>`
 
-## Tables
+## 表格
 
-Use tables to describe complex information in a straightforward manner.
+使用表格以直接的方式描述复杂信息。
 
-Note that in many cases, an unordered list is enough to describe a list of items with a single, simple description per item. But, if you have data that’s best described by a matrix, tables are the best choice.
+请注意，在许多情况下，无序列表足以描述每个项目具有单一、简单描述的项目列表。但是，如果您有最适合用矩阵描述的数据，表格是最佳选择。
 
-### Best practice
+### 最佳实践
 
-- Use sentence case for table headings.
-- To keep tables accessible and scannable, tables shouldn't have any empty cells. If there is no otherwise meaningful value for a cell, consider entering N/A for ‘not applicable’ or None.
+- 对表格标题使用句子大小写。
+- 为了保持表格的可访问性和可读性，表格不应该有任何空单元格。如果单元格没有有意义的值，请考虑输入"N/A"（不适用）或"无"。
 
-For information on how to add tables to your content, see [Useful component and formatting examples](../components/tables.md).
+有关如何在内容中添加表格的信息，请参阅[实用组件和格式示例](../components/tables.md)。
 
-## Referring to file types
+## 引用文件类型
 
-When you're discussing a file type, use the formal name of the type. Don't use the filename extension to refer generically to the file type.
+当您讨论文件类型时，请使用该类型的正式名称。不要使用文件扩展名来泛指文件类型。
 
-    | Correct | Incorrect |
+    | 正确 | 错误 |
     | --- | --- |
-    | a PNG file | a .png file |
-    | a Bash file | an .sh file |
+    | PNG 文件 | .png 文件 |
+    | Bash 文件 | .sh 文件 |
 
-## Referring to units
+## 引用单位
 
-When you're referring to units of measurement, use the abbreviated form in all caps, with a space between the value and the unit. For example:
+当您引用度量单位时，请使用大写的缩写形式，在值和单位之间加一个空格。例如：
 
-    | Correct | Incorrect |
+    | 正确 | 错误 |
     | --- | --- |
     | 10 GB | 10GB |
     | 10 GB | 10 gb |

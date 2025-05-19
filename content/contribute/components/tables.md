@@ -1,24 +1,24 @@
 ---
-description: components and formatting examples used in Docker's docs
-title: Tables
+description: Docker 文档中使用的组件和格式示例
+title: 表格
 toc_max: 3
 ---
 
-## Example
+## 示例
 
-### Basic table
+### 基础表格
 
-| Permission level                                                         | Access                                                        |
+| 权限级别                                                         | 访问权限                                                     |
 | :----------------------------------------------------------------------- | :------------------------------------------------------------ |
-| **Bold** or _italic_ within a table cell. Next cell is empty on purpose. |                                                               |
-|                                                                          | Previous cell is empty. A `--flag` in mono text.              |
-| Read                                                                     | Pull                                                          |
-| Read/Write                                                               | Pull, push                                                    |
-| Admin                                                                    | All of the above, plus update description, create, and delete |
+| 表格单元格中的**粗体**或_斜体_。下一个单元格故意留空。 |                                                               |
+|                                                                          | 前一个单元格为空。等宽字体中的 `--flag`。                      |
+| 读取                                                                     | 拉取                                                          |
+| 读写                                                                | 拉取、推送                                                    |
+| 管理员                                                                    | 以上所有权限，另加更新描述、创建和删除                        |
 
-### Feature-support table
+### 功能支持表格
 
-| Platform   | x86_64 / amd64 |
+| 平台     | x86_64 / amd64 |
 | :--------- | :------------: |
 | Ubuntu     |       ✅       |
 | Debian     |       ✅       |
@@ -27,25 +27,24 @@ toc_max: 3
 
 ## Markdown
 
-### Basic table
+### 基础表格
 
 ```md
-| Permission level                                                         | Access                                                        |
+| 权限级别                                                         | 访问权限                                                     |
 | :----------------------------------------------------------------------- | :------------------------------------------------------------ |
-| **Bold** or _italic_ within a table cell. Next cell is empty on purpose. |                                                               |
-|                                                                          | Previous cell is empty. A `--flag` in mono text.              |
-| Read                                                                     | Pull                                                          |
-| Read/Write                                                               | Pull, push                                                    |
-| Admin                                                                    | All of the above, plus update description, create, and delete |
+| 表格单元格中的**粗体**或_斜体_。下一个单元格故意留空。 |                                                               |
+|                                                                          | 前一个单元格为空。等宽字体中的 `--flag`。                      |
+| 读取                                                                     | 拉取                                                          |
+| 读写                                                                | 拉取、推送                                                    |
+| 管理员                                                                    | 以上所有权限，另加更新描述、创建和删除                        |
 ```
 
-The alignment of the cells in the source doesn't really matter. The ending pipe
-character is optional (unless the last cell is supposed to be empty).
+源代码中单元格的对齐并不重要。结尾的管道符号是可选的（除非最后一个单元格应该为空）。
 
-### Feature-support table
+### 功能支持表格
 
 ```md
-| Platform   | x86_64 / amd64 |
+| 平台     | x86_64 / amd64 |
 | :--------- | :------------: |
 | Ubuntu     |       ✅       |
 | Debian     |       ✅       |

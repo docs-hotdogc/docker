@@ -1,15 +1,15 @@
 ---
-description: components and formatting examples used in Docker's docs
-title: Buttons
+description: Docker 文档中使用的组件和格式示例
+title: 按钮
 toc_max: 3
 ---
 
-### Examples
+### 示例
 
-{{< button url="https://example.com/" text="hello" >}}
+{{< button url="https://example.com/" text="你好" >}}
 
-### Markup
+### 标记语法
 
 ```go
-{{</* button url="https://example.com/" text="hello" */>}}
+{{</* button url="https://example.com/" text="你好" */>}}
 ```

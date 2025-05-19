@@ -1,26 +1,22 @@
 ---
-description: components and formatting examples used in Docker's docs
-title: Code blocks
+description: Docker 文档中使用的组件和格式示例
+title: 代码块
 toc_max: 3
 ---
 
-Rouge provides lots of different code block "hints". If you leave off the hint,
-it tries to guess and sometimes gets it wrong. These are just a few hints that
-we use often.
+Rouge 提供了许多不同的代码块"提示"。如果省略提示，它会尝试猜测，有时可能会猜错。以下是我们经常使用的一些提示。
 
-## Variables
+## 变量
 
-If your example contains a placeholder value that's subject to change,
-use the format `<[A-Z_]+>` for the placeholder value: `<MY_VARIABLE>`
+如果您的示例包含可能改变的占位符值，请使用 `<[A-Z_]+>` 格式作为占位符值：`<MY_VARIABLE>`
 
 ```none
 export name=<MY_NAME>
 ```
 
-This syntax is reserved for variable names, and will cause the variable to
-be rendered in a special color and font style.
+这种语法专门用于变量名，会使变量以特殊的颜色和字体样式显示。
 
-## Highlight lines
+## 高亮行
 
 ```text {hl_lines=[7,8]}
 incoming := map[string]interface{}{
@@ -50,7 +46,7 @@ incoming := map[string]interface{}{
 ```
 ````
 
-## Collapsible code blocks
+## 可折叠代码块
 
 ```dockerfile {collapse=true}
 # syntax=docker/dockerfile:1
@@ -65,7 +61,7 @@ RUN mkdir -p -m 0700 ~/.ssh && ssh-keyscan github.com >> ~/.ssh/known_hosts
 WORKDIR /src
 
 FROM base AS vendor
-# this step configure git and checks the ssh key is loaded
+# 此步骤配置 git 并检查 ssh 密钥是否已加载
 RUN --mount=type=ssh <<EOT
   set -e
   echo "Setting Git SSH protocol"
@@ -79,7 +75,7 @@ RUN --mount=type=ssh <<EOT
     fi
   )
 EOT
-# this one download go modules
+# 此步骤下载 go 模块
 RUN --mount=type=bind,target=. \
     --mount=type=cache,target=/go/pkg/mod \
     --mount=type=ssh \
@@ -94,16 +90,15 @@ RUN --mount=type=bind,target=. \
 
 ## Bash
 
-Use the `bash` language code block when you want to show a Bash script:
+当您想要显示 Bash 脚本时，使用 `bash` 语言代码块：
 
 ```bash
 #!/usr/bin/bash
 echo "deb https://download.docker.com/linux/ubuntu noble stable" | sudo tee /etc/apt/sources.list.d/docker.list
 ```
 
-If you want to show an interactive shell, use `console` instead.
-In cases where you use `console`, make sure to add a dollar character
-for the user sign:
+如果您想显示交互式 shell，请使用 `console`。
+在使用 `console` 的情况下，请确保为用户提示符添加美元符号：
 
 ```console
 $ echo "deb https://download.docker.com/linux/ubuntu noble stable" | sudo tee /etc/apt/sources.list.d/docker.list
@@ -157,13 +152,13 @@ end
 }
 ```
 
-#### HTML
+## HTML
 
 ```html
 <!DOCTYPE html>
 <html>
 <head>
-<title>Welcome to nginx!</title>
+<title>欢迎来到 nginx！</title>
 </head>
 </html>
 ```
@@ -171,18 +166,18 @@ end
 ## Markdown
 
 ```markdown
-# Hello
+# 你好
 ```
 
-If you want to include a triple-fenced code block inside your code block,
-you can wrap your block in a quadruple-fenced code block:
+如果要在代码块中包含三重围栏代码块，
+可以将您的代码块包装在四重围栏代码块中：
 
 `````markdown
 ````markdown
-# Hello
+# 你好
 
 ```go
-log.Println("did something")
+log.Println("做了某事")
 ```
 ````
 `````
@@ -210,8 +205,8 @@ RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ precise-pgdg main" > /etc
 
 RUN apt-get update && apt-get install -y python-software-properties software-properties-common postgresql-9.3 postgresql-client-9.3 postgresql-contrib-9.3
 
-# Note: The official Debian and Ubuntu images automatically ``apt-get clean``
-# after each ``apt-get``
+# 注意：官方的 Debian 和 Ubuntu 镜像在每次执行 ``apt-get`` 后
+# 自动运行 ``apt-get clean``
 
 USER postgres
 

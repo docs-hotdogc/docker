@@ -1,151 +1,150 @@
 ---
-description: Icons used across docs
-title: Icons
+description: 在文档中使用的图标
+title: 图标
 grid:
-  - title: "Install"
+  - title: "安装"
     icon: "download"
-    description: Icon name = download
-  - title: "FAQs"
+    description: 图标名称 = download
+  - title: "常见问题"
     icon: "help"
-    description: Icon name = help
-  - title: "Onboarding/quickstarts"
+    description: 图标名称 = help
+  - title: "入门/快速开始"
     icon: "explore"
-    description: Icon name = explore
-  - title: "Release notes"
+    description: 图标名称 = explore
+  - title: "发行说明"
     icon: "note_add"
-    description: Icon name = note_add
-  - title: "Feedback"
+    description: 图标名称 = note_add
+  - title: "反馈"
     icon: "sms"
-    description: Icon name = sms
-  - title: "Multi-platform/arch"
+    description: 图标名称 = sms
+  - title: "多平台/架构"
     icon: "content_copy"
-    description: Icon name = content_copy
-  - title: "Rootless/ECI"
+    description: 图标名称 = content_copy
+  - title: "无根/ECI"
     icon: "security"
-    description: Icon name = security
-  - title: "Settings management"
+    description: 图标名称 = security
+  - title: "设置管理"
     icon: "shield_lock"
-    description: Icon name = shield_lock
-  - title: "Processes"
+    description: 图标名称 = shield_lock
+  - title: "进程"
     icon: "checklist"
-    description: Icon name = checklist
-  - title: "Networking"
+    description: 图标名称 = checklist
+  - title: "网络"
     icon: "network_node"
-    description: Icon name = network_node
-  - title: "Exploring a feature"
+    description: 图标名称 = network_node
+  - title: "探索功能"
     icon: "feature_search"
-    description: Icon name = feature_search
-  - title: "Company"
+    description: 图标名称 = feature_search
+  - title: "公司"
     icon: "apartment"
-    description: Icon name = apartment
-  - title: "Organization"
+    description: 图标名称 = apartment
+  - title: "组织"
     icon: "store"
-    description: Icon name = store
-  - title: "Additional resources"
+    description: 图标名称 = store
+  - title: "其他资源"
     icon: "category"
-    description: Icon name = category
-  - title: "Designing"
+    description: 图标名称 = category
+  - title: "设计"
     icon: "design_services"
-    description: Icon name = design_services
-  - title: "Publishing"
+    description: 图标名称 = design_services
+  - title: "发布"
     icon: "publish"
-    description: Icon name = publish
-  - title: "Interacting"
+    description: 图标名称 = publish
+  - title: "交互"
     icon: "multiple_stop"
-    description: Icon name = multiple_stop
-  - title: "Storage"
+    description: 图标名称 = multiple_stop
+  - title: "存储"
     icon: "database"
-    description: Icon name = database
-  - title: "logs"
+    description: 图标名称 = database
+  - title: "日志"
     icon: "text_snippet"
-    description: Icon name = text_snippet
-  - title: "Prune/cut"
+    description: 图标名称 = text_snippet
+  - title: "清理/剪切"
     icon: "content_cut"
-    description: Icon name = content_cut
-  - title: "Configure"
+    description: 图标名称 = content_cut
+  - title: "配置"
     icon: "tune"
-    description: Icon name = tune
-  - title: "Deprecated"
+    description: 图标名称 = tune
+  - title: "已弃用"
     icon: "folder_delete"
-    description: Icon name = folder_delete
-  - title: "RAM"
+    description: 图标名称 = folder_delete
+  - title: "内存"
     icon: "home_storage"
-    description: Icon name = home_storage
+    description: 图标名称 = home_storage
   - title: "IAM"
     icon: "photo_library"
-    description: Icon name = photo_library
-  - title: "Packaging"
+    description: 图标名称 = photo_library
+  - title: "打包"
     icon: "inventory_2"
-    description: Icon name = inventory_2
-  - title: "Multi-stage"
+    description: 图标名称 = inventory_2
+  - title: "多阶段"
     icon: "stairs"
-    description: Icon name = stairs
-  - title: "Architecture"
+    description: 图标名称 = stairs
+  - title: "架构"
     icon: "construction"
-    description: Icon name = construction
-  - title: "Build drivers"
+    description: 图标名称 = construction
+  - title: "构建驱动"
     icon: "engineering"
-    description: Icon name = engineering
-  - title: "Export"
+    description: 图标名称 = engineering
+  - title: "导出"
     icon: "output"
-    description: Icon name = output
-  - title: "Cache"
+    description: 图标名称 = output
+  - title: "缓存"
     icon: "cycle"
-    description: Icon name = cycle
-  - title: "Bake"
+    description: 图标名称 = cycle
+  - title: "烘焙"
     icon: "cake"
-    description: Icon name = cake
+    description: 图标名称 = cake
   - title: "Docker ID"
     icon: "fingerprint"
-    description: Icon name = fingerprint
-  - title: "Repository"
+    description: 图标名称 = fingerprint
+  - title: "仓库"
     icon: "inbox"
-    description: Icon name = inbox
-  - title: "Access tokens"
+    description: 图标名称 = inbox
+  - title: "访问令牌"
     icon: "password"
-    description: Icon name = password
-  - title: "official images"
+    description: 图标名称 = password
+  - title: "官方镜像"
     icon: "verified"
-    description: Icon name = verified
-  - title: "Hardened Docker Desktop"
+    description: 图标名称 = verified
+  - title: "强化版 Docker Desktop"
     icon: "lock"
-    description: Icon name = lock
-  - title: "Sign in"
+    description: 图标名称 = lock
+  - title: "登录"
     icon: "passkey"
-    description: Icon name = passkey
-  - title: "SSO and SCIM"
+    description: 图标名称 = passkey
+  - title: "SSO 和 SCIM"
     icon: "key"
-    description: Icon name = key
-  - title: "2FA"
+    description: 图标名称 = key
+  - title: "双因素认证"
     icon: "phonelink_lock"
-    description: Icon name = phonelink_lock 
-  - title: "Add/update payment method"
+    description: 图标名称 = phonelink_lock 
+  - title: "添加/更新支付方式"
     icon: "credit_score"
-    description: Icon name = credit_score 
-  - title: "Update billing info"
+    description: 图标名称 = credit_score 
+  - title: "更新账单信息"
     icon: "contract_edit"
-    description: Icon name = contract_edit 
-  - title: "Billing history"
+    description: 图标名称 = contract_edit 
+  - title: "账单历史"
     icon: "payments"
-    description: Icon name = payments
-  - title: "Upgrade"
+    description: 图标名称 = payments
+  - title: "升级"
     icon: "upgrade"
-    description: Icon name = upgrade
-  - title: "Add/manage more seats/users"
+    description: 图标名称 = upgrade
+  - title: "添加/管理更多席位/用户"
     icon: "group_add"
-    description: Icon name = group_add 
-  - title: "Domains"
+    description: 图标名称 = group_add 
+  - title: "域名"
     icon: "domain_verification"
-    description: Icon name = domain_verification 
-  - title: Company owner
-    description: Icon name = supervised_user_circle
+    description: 图标名称 = domain_verification 
+  - title: "公司所有者"
+    description: 图标名称 = supervised_user_circle
     icon: supervised_user_circle
-  - title: "General settings"
+  - title: "常规设置"
     icon: "settings"
-    description: Icon name = settings
+    description: 图标名称 = settings
 ---
 
-Below is an inventory of the icons we use to represent different topics or features across docs. To be used with the [cards component](cards.md).
+以下是我们在文档中用于表示不同主题或功能的图标列表。与[卡片组件](cards.md)一起使用。
 
 {{< grid >}}
-

@@ -1,4 +1,4 @@
-# syntax=docker/dockerfile:1
+
 # check=skip=InvalidBaseImagePlatform
 
 ARG ALPINE_VERSION=3.21
@@ -7,10 +7,13 @@ ARG HTMLTEST_VERSION=0.17.0
 ARG HUGO_VERSION=0.141.0
 ARG NODE_VERSION=22
 ARG PAGEFIND_VERSION=1.3.0
+ARG REGISTRY_MIRROR=docker.m.daocloud.io
+ARG ALPINE_MIRROR_HOST=mirrors.tuna.tsinghua.edu.cn
 
 # base defines the generic base stage
-FROM golang:${GO_VERSION}-alpine${ALPINE_VERSION} AS base
-RUN apk add --no-cache \
+FROM ${REGISTRY_MIRROR}/golang:${GO_VERSION}-alpine${ALPINE_VERSION} AS base
+RUN sed -i "s|https://dl-cdn.alpinelinux.org|https://mirrors.tuna.tsinghua.edu.cn|g" /etc/apk/repositories && \
+    apk add --no-cache \
     git \
     nodejs \
     npm \
@@ -51,7 +54,7 @@ RUN --mount=type=cache,target=/tmp/hugo_cache \
     hugo --gc --minify -e $HUGO_ENV -b $DOCS_URL
 
 # lint lints markdown files
-FROM davidanson/markdownlint-cli2:v0.14.0 AS lint
+FROM ${REGISTRY_MIRROR}/davidanson/markdownlint-cli2:v0.14.0 AS lint
 USER root
 RUN --mount=type=bind,target=. \
     /usr/local/bin/markdownlint-cli2 \
@@ -60,7 +63,7 @@ RUN --mount=type=bind,target=. \
     "#content/manuals/desktop/previous-versions/*.md"
 
 # test validates HTML output and checks for broken links
-FROM wjdp/htmltest:v${HTMLTEST_VERSION} AS test
+FROM ${REGISTRY_MIRROR}/wjdp/htmltest:v${HTMLTEST_VERSION} AS test
 WORKDIR /test
 COPY --from=build /project/public ./public
 ADD .htmltest.yml .htmltest.yml
@@ -83,7 +86,7 @@ EOT
 RUN hugo mod vendor
 
 # vendor is an empty stage with only vendored Hugo modules
-FROM scratch AS vendor
+FROM ${REGISTRY_MIRROR}/scratch AS vendor
 COPY --from=update-modules /project/_vendor /_vendor
 COPY --from=update-modules /project/go.* /
 
@@ -100,14 +103,14 @@ ENV HUGO_MODULE_REPLACEMENTS="github.com/${UPSTREAM_MODULE_NAME} -> github.com/$
 RUN hugo --ignoreVendorPaths "github.com/${UPSTREAM_MODULE_NAME}"
 
 # validate-upstream validates HTML output for upstream builds
-FROM wjdp/htmltest:v${HTMLTEST_VERSION} AS validate-upstream
+FROM ${REGISTRY_MIRROR}/wjdp/htmltest:v${HTMLTEST_VERSION} AS validate-upstream
 WORKDIR /test
 COPY --from=build-upstream /project/public ./public
 ADD .htmltest.yml .htmltest.yml
 RUN htmltest
 
 # unused-media checks for unused graphics and other media
-FROM alpine:${ALPINE_VERSION} AS unused-media
+FROM ${REGISTRY_MIRROR}/alpine:${ALPINE_VERSION} AS unused-media
 RUN apk add --no-cache fd ripgrep
 WORKDIR /test
 RUN --mount=type=bind,target=. ./hack/test/unused_media
@@ -132,11 +135,11 @@ RUN --mount=type=bind,src=pagefind.yml,target=pagefind.yml \
     npx pagefind@v${PAGEFIND_VERSION} --output-path "/pagefind"
 
 # index generates a Pagefind index
-FROM scratch AS index
+FROM ${REGISTRY_MIRROR}/scratch AS index
 COPY --from=pagefind /pagefind .
 
 # test-go-redirects checks that the /go/ redirects are valid
-FROM alpine:${ALPINE_VERSION} AS test-go-redirects
+FROM ${REGISTRY_MIRROR}/alpine:${ALPINE_VERSION} AS test-go-redirects
 WORKDIR /work
 RUN apk add yq
 COPY --from=build /project/public ./public
@@ -146,6 +149,6 @@ set -ex
 EOT
 
 # release is an empty scratch image with only compiled assets
-FROM scratch AS release
+FROM ${REGISTRY_MIRROR}/scratch AS release
 COPY --from=build /project/public /
 COPY --from=pagefind /pagefind /pagefind

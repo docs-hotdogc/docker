@@ -1,257 +1,208 @@
 ---
-title: Guidelines for writing Docker usage guides
-linkTitle: Write a Docker guide
-description: Learn how to write guides for learning about Docker, with Docker.
+title: Docker 使用指南的编写指南
+linkTitle: 编写 Docker 指南
+description: 学习如何编写有关使用 Docker 的学习指南。
 ---
 
-<!-- vale Docker.We = NO -->
+本指南提供了编写教程风格使用指南的说明和最佳实践，帮助用户使用 Docker 实现特定目标。这些指南将与我们的产品手册和参考资料一起在网站的[指南部分](/guides/_index.md)中展示。
 
-This guide provides instructions and best practices for writing tutorial-style
-usage guides that help users achieve specific goals using Docker. These guides
-will be featured in the [guides section](/guides/_index.md) of the website,
-alongside our product manuals and reference materials.
+我们的文档使用 Markdown 编写，并带有 YAML 格式的前置元数据。我们使用 [Hugo](https://gohugo.io) 构建网站。有关如何为 Docker 文档编写内容的更多信息，请参阅我们的 [CONTRIBUTING.md](https://github.com/docker/docs/tree/main/CONTRIBUTING.md)。
 
-Our documentation is written in Markdown, with YAML front matter for metadata.
-We use [Hugo](https://gohugo.io) to build the website. For more information
-about how to write content for Docker docs, refer to our
-[CONTRIBUTING.md](https://github.com/docker/docs/tree/main/CONTRIBUTING.md).
+## 指南的目的
 
-## Purpose of the guides
+我们的使用指南旨在：
 
-Our usage guides aim to:
+- 教育用户如何在各种场景中利用 Docker
+- 通过循序渐进的教程提供实践经验
+- 帮助用户实现与其兴趣或项目相关的特定目标
 
-- Educate users on how to leverage Docker in various contexts.
-- Provide practical, hands-on experience through step-by-step tutorials.
-- Help users achieve specific goals relevant to their interests or projects.
+## 目标读者
 
-## Audience
+- 经验水平：从初学者到高级用户
+- 角色：开发人员、系统管理员、DevOps 工程师等
+- 技术：各种编程语言和框架
 
-- Experience levels: From beginners to advanced users.
-- Roles: Developers, system administrators, DevOps engineers, and more.
-- Technologies: Various programming languages and frameworks.
+## 指南的元数据
 
-## Metadata for guides
+每个指南必须在文档开头包含一个元数据部分。这些元数据帮助用户根据他们的兴趣和需求发现和筛选指南。
 
-Each guide must include a metadata section at the beginning of the document.
-This metadata helps users discover and filter guides based on their interests
-and needs.
-
-### Example metadata format
+### 元数据格式示例
 
 ```yaml
 ---
-title: Deploy a machine learning model with Docker
-linkTitle: Docker for ML deployment
-description: Learn how to containerize and deploy a machine learning model using Docker.
+title: 使用 Docker 部署机器学习模型
+linkTitle: Docker 用于 ML 部署
+description: 学习如何使用 Docker 容器化和部署机器学习模型。
 summary: |
-  This guide walks you through the steps to containerize a machine learning
-  model and deploy it using Docker, enabling scalable and portable AI
-  solutions.
+  本指南将指导您完成容器化机器学习模型并使用 Docker 部署它的步骤，
+  从而实现可扩展和可移植的 AI 解决方案。
 tags: [machine-learning, deployment]
 languages: [python]
 params:
-  time: 30 minutes
+  time: 30 分钟
 ---
 ```
 
-### Metadata fields
+### 元数据字段
 
-- `title` (required): The main title of the guide in sentence case.
-- `linkTitle` (optional): A shorter title used in navigation menus.
-- `description` (required): A concise description for SEO purposes.
-- `summary` (required): A brief overview of the guide's content.
-- `languages` \* (optional): List of programming languages used.
-- `tags` \* (optional): Domains or subject areas covered.
+- `title`（必需）：指南的主标题，使用句子大小写。
+- `linkTitle`（可选）：导航菜单中使用的较短标题。
+- `description`（必需）：用于 SEO 的简明描述。
+- `summary`（必需）：指南内容的简要概述。
+- `languages` \*（可选）：使用的编程语言列表。
+- `tags` \*（可选）：涉及的领域或主题领域。
 - `params`
-  - `time` (optional): Estimated reading or completion time.
+  - `time`（可选）：预计阅读或完成时间。
 
-\* Do apply at least one of the `languages` or `tags` taxonomies. The values
-are used to associate the page with the filter options on the guides landing
-page.
+\* 至少应用一个 `languages` 或 `tags` 分类。这些值用于将页面与指南登陆页面上的过滤选项关联。
 
-## Document structure
+## 文档结构
 
-Our guides emphasize learning by doing. Depending on the type of guide, the
-structure may vary to best suit the content and provide a smooth learning
-experience.
+我们的指南强调通过实践来学习。根据指南类型的不同，结构可能会有所变化，以最好地适应内容并提供流畅的学习体验。
 
-All guides live directly under the `content/guides/` directory in the Docker
-docs repository. Guides can either be a single page or multiple pages. In the
-case of multi-page guides, every page is a step in a sequential workflow.
+所有指南都直接存放在 Docker 文档仓库的 `content/guides/` 目录下。指南可以是单页面或多页面。对于多页面指南，每个页面都是顺序工作流中的一个步骤。
 
-If you're creating a single-page guide, create a single markdown file in the
-guides directory:
+如果您要创建单页面指南，请在指南目录中创建一个 markdown 文件：
 
 ```bash
-# Create the file
+# 创建文件
 touch content/guides/my-docker-guide.md
-# or if you have Hugo installed:
+# 或如果您已安装 Hugo：
 hugo new content/guides/my-docker-guide.md
 ```
 
-To create a multi-page guide, create a directory where each page is a markdown
-file, with an `_index.md` file representing the introduction to the guide.
+要创建多页面指南，请创建一个目录，其中每个页面都是一个 markdown 文件，并带有一个代表指南介绍的 `_index.md` 文件。
 
 ```bash
-# Create the index page for the guide
+# 创建指南的索引页
 mkdir content/guides/my-docker-guide.md
 touch content/guides/my-docker-guide/_index.md
-# or if you have Hugo installed:
+# 或如果您已安装 Hugo：
 hugo new content/guides/my-docker-guide/_index.md
 ```
 
-Then create the pages for the guide under `content/guides/<dir>/<page>.md` as
-needed. The [metadata](#metadata-for-guides) lives on the `_index.md` page (you
-don't need to assign metadata to individual pages).
+然后根据需要在 `content/guides/<dir>/<page>.md` 下创建指南的页面。[元数据](#指南的元数据)位于 `_index.md` 页面上（您不需要为单独的页面分配元数据）。
 
-### Guides for specific frameworks or languages
+### 特定框架或语言的指南
 
-For guides that demonstrate how to use Docker with a particular framework or
-programming language, consider the following outline:
+对于演示如何将 Docker 与特定框架或编程语言一起使用的指南，请考虑以下大纲：
 
-1. **Introduction**
-   - Briefly introduce the framework or language in the context of Docker.
-   - Explain what the user will achieve by the end of the guide.
-   - List required software, tools, and knowledge.
-2. **Development setup**
-   - Guide the user through setting up a development environment.
-   - Include instructions on writing or obtaining sample code.
-   - Show how to run containers for local development.
-3. **Building the application**
-   - Explain how to create a Dockerfile tailored to the application.
-   - Provide step-by-step instructions for building the Docker image.
-   - If applicable, show how to test the application using Docker.
-4. **Deploying with Docker**
-   - Show how to run the application in a Docker container.
-   - Discuss configuration options and best practices.
-5. **Best practices and conclusions**
-   - Offer tips for optimizing Docker usage with the framework or language.
-   - Summarize key takeaways, suggest next steps, and further reading.
+1. **介绍**
+   - 简要介绍 Docker 环境中的框架或语言
+   - 解释用户在指南结束时将实现什么
+   - 列出所需的软件、工具和知识
+2. **开发环境设置**
+   - 指导用户设置开发环境
+   - 包括编写或获取示例代码的说明
+   - 展示如何运行容器进行本地开发
+3. **构建应用程序**
+   - 解释如何创建适合应用程序的 Dockerfile
+   - 提供构建 Docker 镜像的分步说明
+   - 如果适用，展示如何使用 Docker 测试应用程序
+4. **使用 Docker 部署**
+   - 展示如何在 Docker 容器中运行应用程序
+   - 讨论配置选项和最佳实践
+5. **最佳实践和总结**
+   - 提供优化框架或语言的 Docker 使用技巧
+   - 总结关键要点，建议后续步骤和进一步阅读材料
 
-### Use-case guides
+### 用例指南
 
-For guides focused on accomplishing a specific goal or use case with Docker
-(e.g., deploying a machine learning model), use a flexible outline that ensures
-a logical flow.
+对于专注于使用 Docker 实现特定目标或用例的指南（例如，部署机器学习模型），使用灵活的大纲以确保逻辑流程。
 
-The following outline is an example. The structure should be adjusted to best
-fit the content and ensure a clear, logical progression. Depending on the
-subject matter of your use-case guide, the exact structure will vary.
+以下大纲仅作示例。结构应根据内容调整，确保清晰、逻辑的进展。根据用例指南的主题，具体结构会有所不同。
 
-1. **Introduction**
-   - Describe the problem or goal.
-   - Explain the benefits of using Docker in this context.
-2. **Prerequisites**
-   - List required tools, technologies, and prior knowledge.
-3. **Setup**
-   - Provide instructions for setting up the environment.
-   - Include any necessary configuration steps.
-4. **Implementation**
-   - Walk through the process step by step.
-   - Use code snippets and explanations to illustrate key points.
-5. **Running or deploying the application**
-   - Guide the user on how to execute or deploy the solution.
-   - Discuss any verification steps to ensure success.
-6. **Conclusion**
-   - Recap what was achieved.
-   - Suggest further reading or advanced topics.
+1. **介绍**
+   - 描述问题或目标
+   - 解释在此背景下使用 Docker 的好处
+2. **前提条件**
+   - 列出所需的工具、技术和预备知识
+3. **设置**
+   - 提供设置环境的说明
+   - 包括任何必要的配置步骤
+4. **实现**
+   - 按步骤逐步演示过程
+   - 使用代码片段和解释来说明要点
+5. **运行或部署应用程序**
+   - 指导用户如何执行或部署解决方案
+   - 讨论任何验证步骤以确保成功
+6. **结论**
+   - 回顾已完成的内容
+   - 建议进一步阅读或高级主题
 
-## Example code
+## 示例代码
 
-If you create an example repository with source code to accompany your guide,
-we strongly encourage you to publish that repository under the
-[dockersamples](https://github.com/dockersamples) organization on GitHub.
-Publishing your source code under this organization, rather than your personal
-account, ensures that the source code remains accessible to the maintainers of
-the documentation site after publishing. In the event of a bug or an issue in
-the guide, the documentation team can more easily update the guide and its
-corresponding example repository.
+如果您创建示例仓库并附带指南的源代码，我们强烈建议您在 GitHub 上的 [dockersamples](https://github.com/dockersamples) 组织下发布该仓库。与在您的个人账户下相比，在此组织下发布源代码可确保文档网站的维护人员在发布后能够访问源代码。如果指南中存在错误或问题，文档团队可以更轻松地更新指南及其相应的示例仓库。
 
-Hosting the examples in the official samples namespace also helps secure trust
-with users who are reading the guide.
+在官方示例命名空间中托管示例也有助于增强阅读指南用户的信任。
 
-### Publish a repository under `dockersamples`
+### 在 `dockersamples` 下发布仓库
 
-To publish your repository under the `dockersamples` organization, use the
-[dockersamples template](https://github.com/dockersamples/sample-app-template)
-to initiate a sample repository under your personal namespace. When you've
-finished drafting your content and opened your pull request for the
-documentation, we can transfer the repository to the dockersamples
-organization.
+要在 `dockersamples` 组织下发布您的仓库，请使用 [dockersamples 模板](https://github.com/dockersamples/sample-app-template) 在您的个人命名空间下启动示例仓库。当您完成内容草稿并为文档开启拉取请求时，我们可以将仓库转移到 dockersamples 组织。
 
-## Writing style
+## 写作风格
 
-Use [sentence case](/contribute/style/formatting.md#capitalization) for all
-headings and titles. This means only the first word and proper nouns are
-capitalized.
+所有标题使用[句子大小写](/contribute/style/formatting.md#capitalization)。这意味着只有第一个词和专有名词需要大写。
 
-### Voice and tone
+### 语气和语调
 
-- **Clarity and conciseness**: Use simple language and short sentences to convey information effectively.
-- **Active voice**: Write in the active voice to engage the reader (e.g., "Run the command" instead of "The command should be run").
-- **Consistency**: Maintain a consistent tone and terminology throughout the guide.
+- **清晰简洁**：使用简单的语言和简短的句子来有效传达信息
+- **主动语态**：使用主动语态来吸引读者（例如，使用"运行命令"而不是"应该运行命令"）
+- **一致性**：在整个指南中保持一致的语气和术语
 
-For detailed guidelines, refer to our [voice and tone documentation](/contribute/style/voice-tone.md).
+有关详细指南，请参阅我们的[语气和语调文档](/contribute/style/voice-tone.md)。
 
-### Formatting conventions
+### 格式约定
 
-- **Headings**: Use H2 for main sections and H3 for subsections, following sentence case.
-- **Code examples**: Provide complete, working code snippets with syntax highlighting.
-- **Lists and steps**: Use numbered lists for sequential steps and bullet points for non-sequential information.
-- **Emphasis**: Use bold for UI elements (e.g., **Button**), and italics for emphasis.
-- **Links**: Use descriptive link text (e.g., [Install Docker](/get-started/get-docker.md)).
+- **标题**：主要部分使用 H2，子部分使用 H3，遵循句子大小写
+- **代码示例**：提供完整、可工作的代码片段，带有语法高亮
+- **列表和步骤**：顺序步骤使用编号列表，非顺序信息使用项目符号
+- **强调**：UI 元素使用粗体（例如，**按钮**），强调使用斜体
+- **链接**：使用描述性链接文本（例如，[安装 Docker](/get-started/get-docker.md)）
 
-For more details, see our [content formatting guidelines](/contribute/style/formatting.md)
-and [grammar and style rules](/contribute/style/grammar.md).
+更多详情，请参阅我们的[内容格式指南](/contribute/style/formatting.md)和[语法和风格规则](/contribute/style/grammar.md)。
 
-## Best practices
+## 最佳实践
 
-- **Test all instructions**
-  - Ensure all code and commands work as expected.
-  - Verify that the guide can be followed successfully from start to finish.
-- **Relevance**
-  - Focus on real-world applications and scenarios.
-  - Keep the content up-to-date with the latest Docker versions.
-- **Troubleshooting tips**
-  - Anticipate common issues and provide solutions or references.
-- **Visual aids**
-  - Include screenshots or diagrams where they enhance understanding.
-  - Add captions and alt text for accessibility.
-- **Third-party tools**
-  - Avoid requiring the user to install third-party tools or modify their local development environment.
-  - Prefer using containerized tools and methods where applicable (e.g. `docker exec`).
-  - Some tools are reasonable to assume as installed or prerequisites for guides, such as Node.js and npm. Use your better judgement.
+- **测试所有说明**
+  - 确保所有代码和命令按预期工作
+  - 验证指南可以从头到尾成功完成
+- **相关性**
+  - 专注于实际应用和场景
+  - 使内容与最新的 Docker 版本保持同步
+- **故障排除提示**
+  - 预测常见问题并提供解决方案或参考
+- **视觉辅助**
+  - 在能增强理解的地方包含截图或图表
+  - 为可访问性添加标题和替代文本
+- **第三方工具**
+  - 避免要求用户安装第三方工具或修改其本地开发环境
+  - 优先使用容器化工具和方法（例如 `docker exec`）
+  - 一些工具可以合理假设已安装或作为指南的前提条件，例如 Node.js 和 npm。请使用您的判断
 
-## Additional resources
+## 其他资源
 
-- **Existing guides**
-  - Refer to [Docker Guides](/guides/_index.md) for examples and inspiration.
-- **Style guides**
-  - [Voice and tone](/contribute/style/voice-tone.md)
-  - [Content formatting](/contribute/style/formatting.md)
-  - [Grammar and style](/contribute/style/grammar.md)
+- **现有指南**
+  - 参考 [Docker 指南](/guides/_index.md)获取示例和灵感
+- **风格指南**
+  - [语气和语调](/contribute/style/voice-tone.md)
+  - [内容格式](/contribute/style/formatting.md)
+  - [语法和风格](/contribute/style/grammar.md)
 
-## Submission process
+## 提交流程
 
-- **Proposal**
-  - Raise an issue on the [Docker documentation GitHub repository](https://github.com/docker/docs)
-    with a request to add a new guide.
-  - Once the proposal has been accepted, start writing your guide by forking
-    the repository and creating a branch for your work.
+- **提案**
+  - 在 [Docker 文档 GitHub 仓库](https://github.com/docker/docs)上提出问题，请求添加新指南
+  - 一旦提案被接受，通过复制仓库并为您的工作创建分支来开始编写指南
 
-    > [!NOTE]
-    > Avoid contributing from the `main` branch of your fork, since it makes it
-    > more difficult for maintainers to help you fix any issues that may arise.
+    > [!注意]
+    > 避免从您复制的仓库的 `main` 分支进行贡献，因为这会使维护人员更难帮助您解决可能出现的问题。
 
-- **Review**
-  - Proofread your guide for grammar, clarity, and adherence to the guidelines.
-  - Once your draft is ready, raise a pull request, with a reference to the
-    original issue.
-  - The Docker documentation team and subject matter experts will review your
-    submission and provide feedback on the pull request directly.
-- **Publishing**
-  - Your guide will be published on the Docker documentation website when the
-    reviewers have approved and merged your pull request.
+- **审查**
+  - 检查您的指南的语法、清晰度和对指南的遵守情况
+  - 当您的草稿准备好后，提出拉取请求，并引用原始问题
+  - Docker 文档团队和主题专家将直接在拉取请求上审查您的提交并提供反馈
+- **发布**
+  - 当审查人员批准并合并您的拉取请求后，您的指南将在 Docker 文档网站上发布
 
-Thank you for contributing to the Docker community. Your expertise helps users
-worldwide harness the power of Docker.
+感谢您对 Docker 社区的贡献。您的专业知识帮助全球用户发挥 Docker 的力量。
