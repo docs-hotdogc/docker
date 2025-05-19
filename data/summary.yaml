@@ -208,7 +208,7 @@ MSI installer:
   for: Administrators
 OATs:
   subscription: [Team, Business]
-PKG installer:
+PKG 安装程序:
   subscription: [Business]
   requires: Docker Desktop [4.36](/manuals/desktop/release-notes.md#4360) and later
   for: Administrators

@@ -1,12 +1,12 @@
 ---
-title: PKG installer
-description: Understand how to use the PKG installer. Also explore additional configuration options.
+title: PKG 安装程序
+description: Understand how to use the PKG 安装程序. Also explore additional configuration options.
 keywords: pkg, mac, docker desktop, install, deploy, configure, admin, mdm
 tags: [admin]
 weight: 20
 ---
 
-{{< summary-bar feature_name="PKG installer" >}}
+{{< summary-bar feature_name="PKG 安装程序" >}}
 
 The PKG package supports various MDM (Mobile Device Management) solutions, making it ideal for bulk installations and eliminating the need for manual setups by individual users. With this package, IT administrators can ensure standardized, policy-driven installations of Docker Desktop, enhancing efficiency and software management across their organizations.
 
@@ -14,7 +14,7 @@ The PKG package supports various MDM (Mobile Device Management) solutions, makin
 
 1. In the [Docker Admin Console](http://admin.docker.com/), navigate to your organization.
 2. Under **Docker Desktop**, select the **Deploy** page.
-3. From the **macOS** tab, select the **Download PKG installer** button.
+3. From the **macOS** tab, select the **Download PKG 安装程序** button.
 4. Once downloaded, double-click `Docker.pkg` to run the installer.
 5. Follow the instructions on the installation wizard to authorize the installer and proceed with the installation.
    - **Introduction**: Select **Continue**.
@@ -36,7 +36,7 @@ The PKG package supports various MDM (Mobile Device Management) solutions, makin
 
 1. In the [Docker Admin Console](http://admin.docker.com/), navigate to your organization.
 2. Under **Security and access**, select the **Deploy Docker Desktop** page.
-3. From the **macOS** tab, select the **Download PKG installer** button.
+3. From the **macOS** tab, select the **Download PKG 安装程序** button.
 4. From your terminal, run the following command:
 
    ```console
