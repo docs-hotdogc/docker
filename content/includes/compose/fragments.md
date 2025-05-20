@@ -1,1 +1,1 @@
-With Compose, you can use built-in [YAML](https://www.yaml.org/spec/1.2/spec.html#id2765878) features to make your Compose file neater and more efficient. Anchors and aliases let you create re-usable blocks. This is useful if you start to find common configurations that span multiple services. Having re-usable blocks minimizes potential mistakes.
+使用 Compose 时，你可以使用内置的 [YAML](https://www.yaml.org/spec/1.2/spec.html#id2765878) 功能来使你的 Compose 文件更整洁、更高效。锚点（Anchors）和别名（aliases）让你可以创建可重用的代码块。当你发现多个服务中存在共同配置时，这个功能特别有用。使用可重用的代码块可以最大限度地减少潜在错误。

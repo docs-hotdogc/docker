@@ -1,1 +1,1 @@
-Configs let services to adapt their behaviour without the need to rebuild a Docker image. As with volumes, configs are mounted as files into a container's filesystem. The location of the mount point within the container defaults to `/<config-name>` in Linux containers and `C:\<config-name>` in Windows containers. 
+Configs 允许服务在无需重建 Docker 镜像的情况下调整其行为。与卷（volumes）一样，配置会以文件的形式挂载到容器的文件系统中。挂载点在容器内的默认位置是 Linux 容器中的 `/<config-name>` 或 Windows 容器中的 `C:\<config-name>`。

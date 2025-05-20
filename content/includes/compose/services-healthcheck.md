@@ -1,2 +1,1 @@
-The `healthcheck` attribute declares a check that's run to determine whether or not the service containers are "healthy". It works in the same way, and has the same default values, as the HEALTHCHECK Dockerfile instruction
-set by the service's Docker image. Your Compose file can override the values set in the Dockerfile. 
+`healthcheck` 属性声明了一个检查，用于确定服务容器是否"健康"。它的工作方式和默认值与服务的 Docker 镜像中设置的 HEALTHCHECK Dockerfile 指令相同。你的 Compose 文件可以覆盖 Dockerfile 中设置的值。

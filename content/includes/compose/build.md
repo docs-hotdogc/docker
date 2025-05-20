@@ -1,1 +1,1 @@
-Build is an optional part of the Compose Specification. It tells Compose how to (re)build an application from source and lets you define the build process within a Compose file in a portable way.  `build` can be either specified as a single string defining a context path, or as a detailed build definition.
+Build 是 Compose 规范中的一个可选部分。它告诉 Compose 如何从源代码（重新）构建应用程序，并允许你以可移植的方式在 Compose 文件中定义构建过程。`build` 可以被指定为定义上下文路径的单个字符串，也可以作为一个详细的构建定义。

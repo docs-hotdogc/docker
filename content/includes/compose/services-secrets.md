@@ -1,1 +1,1 @@
-The `secrets` attribute grants access to sensitive data defined by the secrets top-level element on a per-service basis. Services can be granted access to multiple secrets.
+`secrets` 属性基于每个服务授予对由 secrets 顶级元素定义的敏感数据的访问权限。服务可以被授予访问多个密钥的权限。

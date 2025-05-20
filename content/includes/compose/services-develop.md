@@ -1,1 +1,1 @@
-Develop lets Compose focus on the development use-case of running applications on a local machine. It also supports some development hooks to improve the velocity of your local workflow, also known as your "inner loop". 
+Develop 让 Compose 专注于在本地机器上运行应用程序的开发用例。它还支持一些开发钩子来提高本地工作流程（也称为你的"内循环"）的速度。

@@ -1,1 +1,1 @@
-With the `depends_on` attribute, you can control the order of service startup and shutdown. It is useful if services are closely coupled, and the startup sequence impacts the application's functionality.
+通过 `depends_on` 属性，你可以控制服务的启动和关闭顺序。当服务之间紧密耦合，且启动顺序会影响应用程序功能时，这个属性特别有用。

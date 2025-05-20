@@ -1,5 +1,3 @@
-The `volumes` attribute define mount host paths or named volumes that are accessible by service containers. You can use `volumes` to define multiple types of mounts; `volume`, `bind`, `tmpfs`, or `npipe`. 
+`volumes` 属性定义了服务容器可以访问的主机路径或命名卷。你可以使用 `volumes` 来定义多种类型的挂载：`volume`、`bind`、`tmpfs` 或 `npipe`。
 
-If the mount is a host path and is only used by a single service, it can be declared as part of the service
-definition. To reuse a volume across multiple services, a named
-volume must be declared in the `volumes` top-level element.
+如果挂载是主机路径且仅被单个服务使用，则可以作为服务定义的一部分来声明。要在多个服务之间重用卷，必须在顶级 `volumes` 元素中声明命名卷。

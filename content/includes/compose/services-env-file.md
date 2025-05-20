@@ -1,1 +1,1 @@
-The `env_file` attribute is used to specify one or more files that contain environment variables to be passed to the containers.
+`env_file` 属性用于指定一个或多个包含要传递给容器的环境变量的文件。

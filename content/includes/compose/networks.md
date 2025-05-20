@@ -1,1 +1,1 @@
-Networks let services communicate with each other. By default Compose sets up a single network for your app. Each container for a service joins the default network and is both reachable by other containers on that network, and discoverable by the service's name. The top-level `networks` element lets you configure named networks that can be reused across multiple services. 
+Networks 让服务之间可以相互通信。默认情况下，Compose 为你的应用程序设置一个单独的网络。服务的每个容器都会加入默认网络，并且可以被该网络上的其他容器访问，同时可以通过服务名称被发现。顶级的 `networks` 元素让你可以配置命名网络，这些网络可以在多个服务之间重复使用。

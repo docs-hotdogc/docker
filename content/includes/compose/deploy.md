@@ -1,1 +1,1 @@
-Deploy is an optional part of the Compose Specification. It provides a set of deployment specifications for managing the behavior of containers across different environments.
+Deploy 是 Compose 规范中的一个可选部分。它提供了一组部署规范，用于管理不同环境中容器的行为。

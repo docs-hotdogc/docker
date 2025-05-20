@@ -1,1 +1,1 @@
-The `watch` attribute automatically updates and previews your running Compose services as you edit and save your code. For many projects, this enables a hands-off development workflow once Compose is running, as services automatically update themselves when you save your work.
+`watch` 属性自动更新并预览你正在运行的 Compose 服务，当你编辑和保存代码时。对于许多项目来说，一旦 Compose 运行起来，这就实现了一个免手动操作的开发工作流，因为当你保存工作时服务会自动更新。

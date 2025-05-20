@@ -1,1 +1,1 @@
-Volumes are persistent data stores implemented by the container engine. Compose offers a neutral way for services to mount volumes, and configuration parameters to allocate them to infrastructure. The top-level `volumes` declaration lets you configure named volumes that can be reused across multiple services. 
+卷（Volumes）是由容器引擎实现的持久化数据存储。Compose 为服务提供了一种中立的方式来挂载卷，以及将它们分配给基础设施的配置参数。顶级的 `volumes` 声明让你可以配置可以在多个服务之间重用的命名卷。

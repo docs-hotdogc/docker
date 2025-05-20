@@ -1,2 +1,1 @@
-The `networks` attribute defines the networks that service containers are attached to, referencing entries under the
-`networks` top-level element. The `networks` attribute helps manage the networking aspects of containers, providing control over how services are segmented and interact within the Docker environment. This is used to specify which networks the containers for that service should connect to. This is important for defining how containers communicate with each other and externally.
+`networks` 属性定义了服务容器连接到的网络，引用了顶级 `networks` 元素下的条目。`networks` 属性帮助管理容器的网络方面，提供对服务如何在 Docker 环境中分段和交互的控制。它用于指定该服务的容器应该连接到哪些网络。这对于定义容器如何相互通信以及与外部通信非常重要。

@@ -1,1 +1,1 @@
-Docker Compose provides a way for you to use secrets without having to use environment variables to store information. If you’re injecting passwords and API keys as environment variables, you risk unintentional information exposure. Services can only access secrets when explicitly granted by a `secrets` attribute within the `services` top-level element.
+Docker Compose 提供了一种使用密钥（secrets）的方式，无需使用环境变量来存储信息。如果你将密码和 API 密钥作为环境变量注入，则可能会有意外的信息泄露风险。服务只有在 `services` 顶级元素中通过 `secrets` 属性明确授权时才能访问密钥。

@@ -1,5 +1,1 @@
-A service is an abstract definition of a computing resource within an application which can be scaled or replaced
-independently from other components. Services are backed by a set of containers, run by the platform
-according to replication requirements and placement constraints. As services are backed by containers, they are defined
-by a Docker image and set of runtime arguments. All containers within a service are identically created with these
-arguments.
+服务是应用程序中的一个抽象的计算资源定义，可以独立于其他组件进行扩展或替换。服务由一组容器支持，平台根据复制要求和放置约束来运行这些容器。由于服务由容器支持，它们由 Docker 镜像和一组运行时参数定义。服务中的所有容器都使用这些参数以相同的方式创建。

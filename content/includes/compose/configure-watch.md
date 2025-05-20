@@ -1,3 +1,3 @@
-1. Add `watch` sections to one or more services in `compose.yaml`.
-2. Run `docker compose up --watch` to build and launch a Compose project and start the file watch mode.
-3. Edit service source files using your preferred IDE or editor.
+1. 在 `compose.yaml` 中为一个或多个服务添加 `watch` 部分。
+2. 运行 `docker compose up --watch` 来构建并启动 Compose 项目，并开启文件监视模式。
+3. 使用你喜欢的 IDE 或编辑器编辑服务源文件。
