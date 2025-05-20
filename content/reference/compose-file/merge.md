@@ -1,6 +1,6 @@
 ---
-title: Merge
-description: Learn about merging rules
+title: 合并
+description: 了解合并规则
 keywords: compose, compose specification, merge, compose file reference
 aliases: 
  - /compose/compose-file/13-merge/
@@ -9,13 +9,13 @@ weight: 100
 
 {{% include "compose/merge.md" %}}
 
-These rules are outlined below. 
+这些规则如下所述。
 
-## Mapping
+## 映射
 
-A YAML `mapping` gets merged by adding missing entries and merging the conflicting ones.
+YAML `mapping` 通过添加缺失的条目并合并冲突的条目来合并。
 
-Merging the following example YAML trees:
+合并以下示例 YAML 树：
 
 ```yaml
 services:
@@ -31,7 +31,7 @@ services:
     key3: value3
 ```
 
-Results in a Compose application model equivalent to the YAML tree:
+结果是一个等效于以下 YAML 树的 Compose 应用程序模型：
 
 ```yaml
 services:
@@ -41,11 +41,11 @@ services:
     key3: value3
 ```
 
-## Sequence
+## 序列
 
-A YAML `sequence` is merged by appending values from the overriding Compose file to the previous one.
+YAML `sequence` 通过将覆盖 Compose 文件中的值附加到前一个文件来合并。
 
-Merging the following example YAML trees:
+合并以下示例 YAML 树：
 
 ```yaml
 services:
@@ -61,7 +61,7 @@ services:
       - 8.8.8.8
 ```
 
-Results in a Compose application model equivalent to the YAML tree:
+结果是一个等效于以下 YAML 树的 Compose 应用程序模型：
 
 ```yaml
 services:
@@ -71,13 +71,13 @@ services:
       - 8.8.8.8
 ```
 
-## Exceptions
+## 例外
 
-### Shell commands
+### Shell 命令
 
-When merging Compose files that use the services attributes [command](services.md#command), [entrypoint](services.md#entrypoint) and [healthcheck: `test`](services.md#healthcheck), the value is overridden by the latest Compose file, and not appended.
+当合并使用服务属性 [command](services.md#command)、[entrypoint](services.md#entrypoint) 和 [healthcheck: `test`](services.md#healthcheck) 的 Compose 文件时，值会被最新的 Compose 文件覆盖，而不是附加。
 
-Merging the following example YAML trees:
+合并以下示例 YAML 树：
 
 ```yaml
 services:
@@ -91,7 +91,7 @@ services:
     command: ["echo", "bar"]
 ```
 
-Results in a Compose application model equivalent to the YAML tree:
+结果是一个等效于以下 YAML 树的 Compose 应用程序模型：
 
 ```yaml
 services:
@@ -99,21 +99,21 @@ services:
     command: ["echo", "bar"]
 ```
 
-### Unique resources
+### 唯一资源
 
-Applies to the [ports](services.md#ports), [volumes](services.md#volumes), [secrets](services.md#secrets) and [configs](services.md#configs) services attributes.
-While these types are modeled in a Compose file as a sequence, they have special uniqueness requirements:
+适用于服务属性 [ports](services.md#ports)、[volumes](services.md#volumes)、[secrets](services.md#secrets) 和 [configs](services.md#configs)。
+虽然这些类型在 Compose 文件中被建模为序列，但它们有特殊的唯一性要求：
 
-| Attribute   | Unique key               |
-|-------------|--------------------------|
-| volumes     |  target                  |
-| secrets     |  target                  |
-| configs     |  target                  |
-| ports       |  {ip, target, published, protocol}   |
+| 属性       | 唯一键                     |
+|------------|----------------------------|
+| volumes    | target                     |
+| secrets    | target                     |
+| configs    | target                     |
+| ports      | {ip, target, published, protocol} |
 
-When merging Compose files, Compose appends new entries that do not violate a uniqueness constraint and merge entries that share a unique key.
+当合并 Compose 文件时，Compose 会附加不违反唯一性约束的新条目，并合并共享唯一键的条目。
 
-Merging the following example YAML trees:
+合并以下示例 YAML 树：
 
 ```yaml
 services:
@@ -129,7 +129,7 @@ services:
       - bar:/work
 ```
 
-Results in a Compose application model equivalent to the YAML tree:
+结果是一个等效于以下 YAML 树的 Compose 应用程序模型：
 
 ```yaml
 services:
@@ -138,18 +138,14 @@ services:
       - bar:/work
 ```
 
-### Reset value
+### 重置值
 
-In addition to the previously described mechanism, an override Compose file can also be used to remove elements from your application model.
-For this purpose, the custom [YAML tag](https://yaml.org/spec/1.2.2/#24-tags) `!reset` can be set to
-override a value set by the overridden Compose file. A valid value for attribute must be provided,
-but will be ignored and target attribute will be set with type's default value or `null`. 
+除了前面描述的机制外，覆盖 Compose 文件还可以用于从应用程序模型中删除元素。
+为此，可以设置自定义 [YAML 标签](https://yaml.org/spec/1.2.2/#24-tags) `!reset` 来覆盖被覆盖的 Compose 文件设置的值。必须为属性提供有效值，但将被忽略，目标属性将被设置为类型的默认值或 `null`。
 
-For readability, it is recommended to explicitly set the attribute value to the null (`null`) or empty
-array `[]` (with `!reset null` or `!reset []`) so that it is clear that resulting attribute will be
-cleared.
+为了提高可读性，建议将属性值显式设置为 null（`null`）或空数组 `[]`（使用 `!reset null` 或 `!reset []`），以便清楚地表明结果属性将被清除。
 
-A base `compose.yaml` file:
+基础 `compose.yaml` 文件：
 
 ```yaml
 services:
@@ -161,7 +157,7 @@ services:
       FOO: BAR           
 ```
 
-And a `compose.override.yaml` file:
+和 `compose.override.yaml` 文件：
 
 ```yaml
 services:
@@ -172,7 +168,7 @@ services:
       FOO: !reset null
 ```
 
-Results in:
+结果：
 
 ```yaml
 services:
@@ -180,14 +176,13 @@ services:
     image: myapp
 ```
 
-### Replace value
+### 替换值
 
 {{< summary-bar feature_name="Compose replace file" >}}
 
-While `!reset` can be used to remove a declaration from a Compose file using an override file, `!override` allows you
-to fully replace an attribute, bypassing the standard merge rules. A typical example is to fully replace a resource definition, to rely on a distinct model but using the same name.
+虽然 `!reset` 可用于使用覆盖文件从 Compose 文件中删除声明，但 `!override` 允许您完全替换属性，绕过标准合并规则。一个典型的例子是完全替换资源定义，以依赖不同的模型但使用相同的名称。
 
-A base `compose.yaml` file:
+基础 `compose.yaml` 文件：
 
 ```yaml
 services:
@@ -197,7 +192,7 @@ services:
       - "8080:80"
 ```
 
-To remove the original port, but expose a new one, the following override file is used:
+要删除原始端口但暴露新端口，使用以下覆盖文件：
 
 ```yaml
 services:
@@ -206,7 +201,7 @@ services:
       - "8443:443" 
 ```
 
-This results in: 
+结果：
 
 ```yaml
 services:
@@ -216,9 +211,9 @@ services:
       - "8443:443" 
 ```
 
-If `!override` had not been used, both `8080:80` and `8443:443` would be exposed as per the [merging rules outlined above](#sequence). 
+如果未使用 `!override`，根据[上述合并规则](#sequence)，`8080:80` 和 `8443:443` 都将被暴露。
 
-## Additional resources
+## 其他资源
 
-For more information on how merge can be used to create a composite Compose file, see [Working with multiple Compose files](/manuals/compose/how-tos/multiple-compose-files/_index.md)
+有关如何使用合并创建复合 Compose 文件的更多信息，请参阅[使用多个 Compose 文件](/manuals/compose/how-tos/multiple-compose-files/_index.md)
 

@@ -1,7 +1,7 @@
 ---
 title: Docker Engine API
-description: Learn how you can use Docker Engine API and SDKs in the language of your choice.
-keywords: developing, api, Docker Engine API, API versions, SDK versions
+description: 了解如何使用您选择的语言来使用 Docker Engine API 和 SDK。
+keywords: 开发, api, Docker Engine API, API 版本, SDK 版本
 aliases:
   - /reference/api/docker_remote_api/
   - /reference/api/docker_remote_api_v1.0/
@@ -27,48 +27,39 @@ aliases:
   - /engine/api/
 ---
 
-Docker provides an API for interacting with the Docker daemon (called the Docker
-Engine API), as well as SDKs for Go and Python. The SDKs allow you to efficiently build and
-scale Docker apps and solutions. If Go or Python don't work
-for you, you can use the Docker Engine API directly.
+Docker 提供了一个用于与 Docker 守护进程交互的 API（称为 Docker Engine API），
+以及用于 Go 和 Python 的 SDK。这些 SDK 可以让您高效地构建和扩展 Docker 应用
+程序和解决方案。如果 Go 或 Python 不适合您，您也可以直接使用 Docker Engine API。
 
-For information about Docker Engine SDKs, see [Develop with Docker Engine SDKs](sdk/_index.md).
+有关 Docker Engine SDK 的信息，请参阅[使用 Docker Engine SDK 进行开发](sdk/_index.md)。
 
-The Docker Engine API is a RESTful API accessed by an HTTP client such as `wget` or
-`curl`, or the HTTP library which is part of most modern programming languages.
+Docker Engine API 是一个 RESTful API，可以通过 `wget` 或 `curl` 等 HTTP 客户端，
+或大多数现代编程语言中的 HTTP 库来访问。
 
-## View the API reference
+## 查看 API 参考
 
-You can
-[view the reference for the latest version of the API](/reference/api/engine/version/v{{% param latest_engine_api_version %}}.md)
-or [choose a specific version](/reference/api/engine/version-history/).
+您可以[查看最新版本的 API 参考](/reference/api/engine/version/v{{% param latest_engine_api_version %}}.md)
+或[选择特定版本](/reference/api/engine/version-history/)。
 
-## Versioned API and SDK
+## API 和 SDK 版本
 
-The version of the Docker Engine API you should use depends upon the version of
-your Docker daemon and Docker client.
+您应该使用的 Docker Engine API 版本取决于您的 Docker 守护进程和 Docker 客户端的版本。
 
-A given version of the Docker Engine SDK supports a specific version of the
-Docker Engine API, as well as all earlier versions. If breaking changes occur,
-they are documented prominently.
+特定版本的 Docker Engine SDK 支持特定版本的 Docker Engine API，以及所有早期版本。
+如果发生重大变更，这些变更会被明确记录。
 
 > [!NOTE]
 >
-> The Docker daemon and client don't necessarily need to be the same version
-> at all times. However, keep the following in mind.
+> Docker 守护进程和客户端不一定需要始终保持相同的版本。但是，请记住以下几点：
 >
-> - If the daemon is newer than the client, the client doesn't know about new
->   features or deprecated API endpoints in the daemon.
+> - 如果守护进程比客户端新，客户端将不知道守护进程中的新功能或已弃用的 API 端点。
 >
-> - If the client is newer than the daemon, the client can request API
->   endpoints that the daemon doesn't know about.
+> - 如果客户端比守护进程新，客户端可能会请求守护进程不知道的 API 端点。
 
-A new version of the API is released when new features are added. The Docker API
-is backward-compatible, so you don't need to update code that uses the API
-unless you need to take advantage of new features.
+当添加新功能时，会发布新版本的 API。Docker API 是向后兼容的，因此除非您需要
+使用新功能，否则不需要更新使用 API 的代码。
 
-To see the highest version of the API your Docker daemon and client support, use
-`docker version`:
+要查看您的 Docker 守护进程和客户端支持的最高 API 版本，请使用 `docker version`：
 
 ```console
 $ docker version
@@ -92,17 +83,15 @@ Server: Docker Engine - Community
   ...
 ```
 
-You can specify the API version to use in any of the following ways:
+您可以通过以下任何方式指定要使用的 API 版本：
 
-- When using the SDK, use the latest version. At a minimum, use the version
-  that incorporates the API version with the features you need.
-- When using `curl` directly, specify the version as the first part of the URL.
-  For instance, if the endpoint is `/containers/` you can use
-  `/v{{% param "latest_engine_api_version" %}}/containers/`.
-- To force the Docker CLI or the Docker Engine SDKs to use an older version
-  of the API than the version reported by `docker version`, set the
-  environment variable `DOCKER_API_VERSION` to the correct version. This works
-  on Linux, Windows, or macOS clients.
+- 使用 SDK 时，请使用最新版本。至少要使用包含您需要的功能的 API 版本。
+- 直接使用 `curl` 时，将版本指定为 URL 的第一部分。
+  例如，如果端点是 `/containers/`，您可以使用
+  `/v{{% param "latest_engine_api_version" %}}/containers/`。
+- 要强制 Docker CLI 或 Docker Engine SDK 使用比 `docker version` 报告的版本
+  更旧的 API 版本，请将环境变量 `DOCKER_API_VERSION` 设置为正确的版本。
+  这在 Linux、Windows 或 macOS 客户端上都有效。
 
   {{% apiVersionPrevious.inline %}}
   {{- $version := site.Params.latest_engine_api_version }}
@@ -114,21 +103,17 @@ You can specify the API version to use in any of the following ways:
   ```
   {{% /apiVersionPrevious.inline %}}
 
-  While the environment variable is set, that version of the API is used, even
-  if the Docker daemon supports a newer version. This environment variable
-  disables API version negotiation, so you should only use it if you must
-  use a specific version of the API, or for debugging purposes.
+  当设置了环境变量时，即使 Docker 守护进程支持更新的版本，也会使用该版本的 API。
+  这个环境变量会禁用 API 版本协商，因此您只应在必须使用特定版本的 API 时或出于
+  调试目的时使用它。
 
-- The Docker Go SDK allows you to enable API version negotiation, automatically
-  selects an API version that's supported by both the client and the Docker Engine
-  that's in use.
-- For the SDKs, you can also specify the API version programmatically as a
-  parameter to the `client` object. See the
-  [Go constructor](https://pkg.go.dev/github.com/docker/docker/client#NewClientWithOpts)
-  or the
-  [Python SDK documentation for `client`](https://docker-py.readthedocs.io/en/stable/client.html).
+  - Docker Go SDK 允许您启用 API 版本协商，自动选择客户端和正在使用的
+    Docker Engine 都支持的 API 版本。
+  - 对于 SDK，您还可以通过编程方式将 API 版本指定为 `client` 对象的参数。
+    请参阅 [Go 构造函数](https://pkg.go.dev/github.com/docker/docker/client#NewClientWithOpts)
+    或 [`client` 的 Python SDK 文档](https://docker-py.readthedocs.io/en/stable/client.html)。
 
-### API version matrix
+### API 版本对照表
 
 | Docker version | Maximum API version                          | Change log                                                         |
 |:---------------|:---------------------------------------------|:-------------------------------------------------------------------|
@@ -166,11 +151,10 @@ You can specify the API version to use in any of the following ways:
 | 1.13           | [1.25](/reference/api/engine/version/v1.26/) | [changes](/reference/api/engine/version-history/#v125-api-changes) |
 | 1.12           | [1.24](/reference/api/engine/version/v1.24/) | [changes](/reference/api/engine/version-history/#v124-api-changes) |
 
-### Deprecated API versions
+### 已弃用的 API 版本
 
-API versions before v1.24 are [deprecated](/engine/deprecated/#deprecate-legacy-api-versions).
-You can find archived documentation for deprecated versions of the API in the
-code repository on GitHub:
+v1.24 之前的 API 版本已[弃用](/engine/deprecated/#deprecate-legacy-api-versions)。
+您可以在 GitHub 的代码仓库中找到已弃用 API 版本的存档文档：
 
-- [Documentation for API versions 1.23 and before](https://github.com/moby/moby/tree/v25.0.0/docs/api).
-- [Documentation for API versions 1.17 and before](https://github.com/moby/moby/tree/v1.9.1/docs/reference/api).
+- [API 版本 1.23 及之前版本的文档](https://github.com/moby/moby/tree/v25.0.0/docs/api)。
+- [API 版本 1.17 及之前版本的文档](https://github.com/moby/moby/tree/v1.9.1/docs/reference/api)。

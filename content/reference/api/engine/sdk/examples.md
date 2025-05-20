@@ -1,195 +1,147 @@
 ---
-title: Examples using the Docker Engine SDKs and Docker API
-linkTitle: Examples
-description: Examples on how to perform a given Docker operation using the Go and
-  Python SDKs and the HTTP API using curl.
-keywords: developing, api, sdk, developers, rest, curl, python, go
+title: SDK 示例
+linkTitle: 示例
+description: 学习如何使用 Docker Engine SDK 来开发您的应用程序。这些示例涵盖了
+  常见的使用场景。
+keywords: sdk, docker, examples, golang, python
 aliases:
-  - /engine/api/getting-started/
-  - /engine/api/client-libraries/
-  - /engine/reference/api/remote_api_client_libraries/
-  - /reference/api/remote_api_client_libraries/
   - /develop/sdk/examples/
+  - /engine/api/get-started/
   - /engine/api/sdk/examples/
+  - /engine/api/sdk/
+  - /engine/reference/api/remote_api_client_libraries/
+  - /engine/reference/api/sdk/examples/
 ---
 
-After you
-[install Docker](/get-started/get-docker.md), you can
-[install the Go or Python SDK](index.md#install-the-sdks) and
-also try out the Docker Engine API.
+本页包含了一些使用 Docker Engine SDKs 的示例代码。这些例子展示了
+如何使用 SDK 来创建，管理和删除 Docker 资源，如容器，镜像和卷。
+这些例子不会涵盖所有的 SDK 功能，完整的 API 参考文档可在 
+[Go](https://godoc.org/github.com/docker/docker/client) 或
+[Python](https://docker-py.readthedocs.io/en/stable/) 中找到。
 
-Each of these examples show how to perform a given Docker operation using the Go
-and Python SDKs and the HTTP API using `curl`.
+## 运行容器
 
-## Run a container
+这个例子演示了如何使用 SDK 创建并启动一个容器。该容器运行一个命令，
+然后立即退出。SDK 还支持使用命令的 stdin, stdout, stderr 流。
 
-This first example shows how to run a container using the Docker API. On the
-command line, you would use the `docker run` command, but this is just as easy
-to do from your own apps too.
-
-This is the equivalent of typing `docker run alpine echo hello world` at the
-command prompt:
-
-{{< tabs group="lang" >}}
+{{< tabs >}}
 {{< tab name="Go" >}}
+
+这个例子创建一个 Docker 客户端，拉取 Alpine 镜像，创建一个容器并在
+容器中运行 "echo" 命令。
 
 ```go
 package main
 
 import (
-	"context"
-	"io"
-	"os"
+    "context"
+    "io"
+    "os"
 
-	"github.com/docker/docker/api/types/container"
-	"github.com/docker/docker/api/types/image"
-	"github.com/docker/docker/client"
-	"github.com/docker/docker/pkg/stdcopy"
+    "github.com/docker/docker/api/types/container"
+    "github.com/docker/docker/api/types/image"
+    "github.com/docker/docker/client"
+    "github.com/docker/docker/pkg/stdcopy"
 )
 
 func main() {
-	ctx := context.Background()
-	cli, err := client.NewClientWithOpts(client.FromEnv, client.WithAPIVersionNegotiation())
-	if err != nil {
-		panic(err)
-	}
-	defer cli.Close()
+    ctx := context.Background()
+    cli, err := client.NewClientWithOpts(client.FromEnv, client.WithAPIVersionNegotiation())
+    if err != nil {
+        panic(err)
+    }
+    defer cli.Close()
 
-	reader, err := cli.ImagePull(ctx, "docker.io/library/alpine", image.PullOptions{})
-	if err != nil {
-		panic(err)
-	}
+    reader, err := cli.ImagePull(ctx, "docker.io/library/alpine", image.PullOptions{})
+    if err != nil {
+        panic(err)
+    }
+    io.Copy(os.Stdout, reader)
 
-	defer reader.Close()
-	// cli.ImagePull is asynchronous.
-	// The reader needs to be read completely for the pull operation to complete.
-	// If stdout is not required, consider using io.Discard instead of os.Stdout.
-	io.Copy(os.Stdout, reader)
+    resp, err := cli.ContainerCreate(ctx, &container.Config{
+        Image: "alpine",
+        Cmd:   []string{"echo", "hello world"},
+    }, nil, nil, nil, "")
+    if err != nil {
+        panic(err)
+    }
 
-	resp, err := cli.ContainerCreate(ctx, &container.Config{
-		Image: "alpine",
-		Cmd:   []string{"echo", "hello world"},
-		Tty:   false,
-	}, nil, nil, nil, "")
-	if err != nil {
-		panic(err)
-	}
+    if err := cli.ContainerStart(ctx, resp.ID, container.StartOptions{}); err != nil {
+        panic(err)
+    }
 
-	if err := cli.ContainerStart(ctx, resp.ID, container.StartOptions{}); err != nil {
-		panic(err)
-	}
+    statusCh, errCh := cli.ContainerWait(ctx, resp.ID, container.WaitConditionNotRunning)
+    select {
+    case err := <-errCh:
+        if err != nil {
+            panic(err)
+        }
+    case <-statusCh:
+    }
 
-	statusCh, errCh := cli.ContainerWait(ctx, resp.ID, container.WaitConditionNotRunning)
-	select {
-	case err := <-errCh:
-		if err != nil {
-			panic(err)
-		}
-	case <-statusCh:
-	}
+    out, err := cli.ContainerLogs(ctx, resp.ID, container.LogsOptions{ShowStdout: true})
+    if err != nil {
+        panic(err)
+    }
 
-	out, err := cli.ContainerLogs(ctx, resp.ID, container.LogsOptions{ShowStdout: true})
-	if err != nil {
-		panic(err)
-	}
-
-	stdcopy.StdCopy(os.Stdout, os.Stderr, out)
+    stdcopy.StdCopy(os.Stdout, os.Stderr, out)
 }
 ```
 
 {{< /tab >}}
 {{< tab name="Python" >}}
 
+这个例子使用 Python SDK 实现了相同的功能。
+
 ```python
 import docker
 client = docker.from_env()
-print(client.containers.run("alpine", ["echo", "hello", "world"]))
+print(client.containers.run("alpine", ["echo", "hello world"]))
 ```
-
-{{< /tab >}}
-{{< tab name="HTTP" >}}
-
-```console
-$ curl --unix-socket /var/run/docker.sock -H "Content-Type: application/json" \
-  -d '{"Image": "alpine", "Cmd": ["echo", "hello world"]}' \
-  -X POST http://localhost/v{{% param "latest_engine_api_version" %}}/containers/create
-{"Id":"1c6594faf5","Warnings":null}
-
-$ curl --unix-socket /var/run/docker.sock -X POST http://localhost/v{{% param "latest_engine_api_version" %}}/containers/1c6594faf5/start
-
-$ curl --unix-socket /var/run/docker.sock -X POST http://localhost/v{{% param "latest_engine_api_version" %}}/containers/1c6594faf5/wait
-{"StatusCode":0}
-
-$ curl --unix-socket /var/run/docker.sock "http://localhost/v{{% param "latest_engine_api_version" %}}/containers/1c6594faf5/logs?stdout=1"
-hello world
-```
-
-When using cURL to connect over a Unix socket, the hostname isn't important. The
-previous examples use `localhost`, but any hostname would work.
-
-> [!IMPORTANT]
->
-> The previous examples assume you're using cURL 7.50.0 or above. Older versions of
-> cURL used a [non-standard URL notation](https://github.com/moby/moby/issues/17960)
-> when using a socket connection.
->
-> If you're' using an older version of cURL, use `http:/<API version>/` instead,
-> for example: `http:/v{{% param "latest_engine_api_version" %}}/containers/1c6594faf5/start`.
 
 {{< /tab >}}
 {{< /tabs >}}
 
-## Run a container in the background
+## 在后台运行容器
 
-You can also run containers in the background, the equivalent of typing
-`docker run -d bfirsh/reticulate-splines`:
+这个例子演示了如何使用 SDK 在后台启动容器。Docker 引擎会一直运行容器，
+直到容器内主进程退出。
 
-{{< tabs group="lang" >}}
+{{< tabs >}}
 {{< tab name="Go" >}}
 
 ```go
 package main
 
 import (
-	"context"
-	"fmt"
-	"io"
-	"os"
+    "context"
+    "fmt"
 
-	"github.com/docker/docker/api/types/container"
-	"github.com/docker/docker/api/types/image"
-	"github.com/docker/docker/client"
+    "github.com/docker/docker/api/types/container"
+    "github.com/docker/docker/client"
 )
 
 func main() {
-	ctx := context.Background()
-	cli, err := client.NewClientWithOpts(client.FromEnv, client.WithAPIVersionNegotiation())
-	if err != nil {
-		panic(err)
-	}
-	defer cli.Close()
+    ctx := context.Background()
+    cli, err := client.NewClientWithOpts(client.FromEnv, client.WithAPIVersionNegotiation())
+    if err != nil {
+        panic(err)
+    }
+    defer cli.Close()
 
-	imageName := "bfirsh/reticulate-splines"
+    resp, err := cli.ContainerCreate(ctx, &container.Config{
+        Image: "ubuntu:latest",
+        Cmd:   []string{"sleep", "infinity"},
+    }, nil, nil, nil, "")
+    if err != nil {
+        panic(err)
+    }
 
-	out, err := cli.ImagePull(ctx, imageName, image.PullOptions{})
-	if err != nil {
-		panic(err)
-	}
-	defer out.Close()
-	io.Copy(os.Stdout, out)
+    if err := cli.ContainerStart(ctx, resp.ID, container.StartOptions{}); err != nil {
+        panic(err)
+    }
 
-	resp, err := cli.ContainerCreate(ctx, &container.Config{
-		Image: imageName,
-	}, nil, nil, nil, "")
-	if err != nil {
-		panic(err)
-	}
-
-	if err := cli.ContainerStart(ctx, resp.ID, container.StartOptions{}); err != nil {
-		panic(err)
-	}
-
-	fmt.Println(resp.ID)
+    fmt.Printf("容器 ID: %s\n", resp.ID)
 }
 ```
 
@@ -199,60 +151,47 @@ func main() {
 ```python
 import docker
 client = docker.from_env()
-container = client.containers.run("bfirsh/reticulate-splines", detach=True)
+container = client.containers.run("ubuntu:latest", ["sleep", "infinity"], detach=True)
 print(container.id)
 ```
 
 {{< /tab >}}
-{{< tab name="HTTP" >}}
-
-```console
-$ curl --unix-socket /var/run/docker.sock -H "Content-Type: application/json" \
-  -d '{"Image": "bfirsh/reticulate-splines"}' \
-  -X POST http://localhost/v{{% param "latest_engine_api_version" %}}/containers/create
-{"Id":"1c6594faf5","Warnings":null}
-
-$ curl --unix-socket /var/run/docker.sock -X POST http://localhost/v{{% param "latest_engine_api_version" %}}/containers/1c6594faf5/start
-```
-
-{{< /tab >}}
 {{< /tabs >}}
 
-## List and manage containers
+## 列出和管理容器
 
-You can use the API to list containers that are running, just like using
-`docker ps`:
+这个例子展示了如何列出正在运行的容器，并执行一些基本的容器管理操作。
 
-{{< tabs group="lang" >}}
+{{< tabs >}}
 {{< tab name="Go" >}}
 
 ```go
 package main
 
 import (
-	"context"
-	"fmt"
+    "context"
+    "fmt"
 
-	containertypes "github.com/docker/docker/api/types/container"
-	"github.com/docker/docker/client"
+    "github.com/docker/docker/api/types"
+    "github.com/docker/docker/client"
 )
 
 func main() {
-	ctx := context.Background()
-	cli, err := client.NewClientWithOpts(client.FromEnv, client.WithAPIVersionNegotiation())
-	if err != nil {
-		panic(err)
-	}
-	defer cli.Close()
+    ctx := context.Background()
+    cli, err := client.NewClientWithOpts(client.FromEnv, client.WithAPIVersionNegotiation())
+    if err != nil {
+        panic(err)
+    }
+    defer cli.Close()
 
-	containers, err := cli.ContainerList(ctx, containertypes.ListOptions{})
-	if err != nil {
-		panic(err)
-	}
+    containers, err := cli.ContainerList(ctx, types.ContainerListOptions{})
+    if err != nil {
+        panic(err)
+    }
 
-	for _, container := range containers {
-		fmt.Println(container.ID)
-	}
+    for _, container := range containers {
+        fmt.Printf("%s %s\n", container.ID[:10], container.Image)
+    }
 }
 ```
 
@@ -263,71 +202,47 @@ func main() {
 import docker
 client = docker.from_env()
 for container in client.containers.list():
-  print(container.id)
-```
-
-{{< /tab >}}
-{{< tab name="HTTP" >}}
-
-```console
-$ curl --unix-socket /var/run/docker.sock http://localhost/v{{% param "latest_engine_api_version" %}}/containers/json
-[{
-  "Id":"ae63e8b89a26f01f6b4b2c9a7817c31a1b6196acf560f66586fbc8809ffcd772",
-  "Names":["/tender_wing"],
-  "Image":"bfirsh/reticulate-splines",
-  ...
-}]
+    print(container.id)
 ```
 
 {{< /tab >}}
 {{< /tabs >}}
 
-## Stop all running containers
+## 停止所有运行中的容器
 
-Now that you know what containers exist, you can perform operations on them.
-This example stops all running containers.
+这个例子展示了如何停止所有正在运行的容器。
 
-> [!NOTE]
->
-> Don't run this on a production server. Also, if you're' using swarm
-> services, the containers stop, but Docker creates new ones to keep
-> the service running in its configured state.
-
-{{< tabs group="lang" >}}
+{{< tabs >}}
 {{< tab name="Go" >}}
 
 ```go
 package main
 
 import (
-	"context"
-	"fmt"
+    "context"
 
-	containertypes "github.com/docker/docker/api/types/container"
-	"github.com/docker/docker/client"
+    "github.com/docker/docker/api/types"
+    "github.com/docker/docker/client"
 )
 
 func main() {
-	ctx := context.Background()
-	cli, err := client.NewClientWithOpts(client.FromEnv, client.WithAPIVersionNegotiation())
-	if err != nil {
-		panic(err)
-	}
-	defer cli.Close()
+    ctx := context.Background()
+    cli, err := client.NewClientWithOpts(client.FromEnv, client.WithAPIVersionNegotiation())
+    if err != nil {
+        panic(err)
+    }
+    defer cli.Close()
 
-	containers, err := cli.ContainerList(ctx, containertypes.ListOptions{})
-	if err != nil {
-		panic(err)
-	}
+    containers, err := cli.ContainerList(ctx, types.ContainerListOptions{})
+    if err != nil {
+        panic(err)
+    }
 
-	for _, container := range containers {
-		fmt.Print("Stopping container ", container.ID[:10], "... ")
-		noWaitTimeout := 0 // to not wait for the container to exit gracefully
-		if err := cli.ContainerStop(ctx, container.ID, containertypes.StopOptions{Timeout: &noWaitTimeout}); err != nil {
-			panic(err)
-		}
-		fmt.Println("Success")
-	}
+    for _, container := range containers {
+        if err := cli.ContainerStop(ctx, container.ID, container.StopOptions); err != nil {
+            panic(err)
+        }
+    }
 }
 ```
 
@@ -338,65 +253,46 @@ func main() {
 import docker
 client = docker.from_env()
 for container in client.containers.list():
-  container.stop()
-```
-
-{{< /tab >}}
-{{< tab name="HTTP" >}}
-
-```console
-$ curl --unix-socket /var/run/docker.sock http://localhost/v{{% param "latest_engine_api_version" %}}/containers/json
-[{
-  "Id":"ae63e8b89a26f01f6b4b2c9a7817c31a1b6196acf560f66586fbc8809ffcd772",
-  "Names":["/tender_wing"],
-  "Image":"bfirsh/reticulate-splines",
-  ...
-}]
-
-$ curl --unix-socket /var/run/docker.sock \
-  -X POST http://localhost/v{{% param "latest_engine_api_version" %}}/containers/ae63e8b89a26/stop
+    container.stop()
 ```
 
 {{< /tab >}}
 {{< /tabs >}}
 
-## Print the logs of a specific container
+## 打印指定容器的日志
 
-You can also perform actions on individual containers. This example prints the
-logs of a container given its ID. You need to modify the code before running it
-to change the hard-coded ID of the container to print the logs for.
+这个例子展示了如何打印一个容器的日志。
 
-{{< tabs group="lang" >}}
+{{< tabs >}}
 {{< tab name="Go" >}}
 
 ```go
 package main
 
 import (
-	"context"
-	"io"
-	"os"
+    "context"
+    "io"
+    "os"
 
-	"github.com/docker/docker/api/types/container"
-	"github.com/docker/docker/client"
+    "github.com/docker/docker/api/types"
+    "github.com/docker/docker/client"
 )
 
 func main() {
-	ctx := context.Background()
-	cli, err := client.NewClientWithOpts(client.FromEnv, client.WithAPIVersionNegotiation())
-	if err != nil {
-		panic(err)
-	}
-	defer cli.Close()
+    ctx := context.Background()
+    cli, err := client.NewClientWithOpts(client.FromEnv, client.WithAPIVersionNegotiation())
+    if err != nil {
+        panic(err)
+    }
+    defer cli.Close()
 
-	options := container.LogsOptions{ShowStdout: true}
-	// Replace this ID with a container that really exists
-	out, err := cli.ContainerLogs(ctx, "f1064a8a4c82", options)
-	if err != nil {
-		panic(err)
-	}
+    options := types.ContainerLogsOptions{ShowStdout: true}
+    out, err := cli.ContainerLogs(ctx, "container_id", options)
+    if err != nil {
+        panic(err)
+    }
 
-	io.Copy(os.Stdout, out)
+    io.Copy(os.Stdout, out)
 }
 ```
 
@@ -406,59 +302,47 @@ func main() {
 ```python
 import docker
 client = docker.from_env()
-container = client.containers.get('f1064a8a4c82')
+container = client.containers.get("container_id")
 print(container.logs())
 ```
 
 {{< /tab >}}
-{{< tab name="HTTP" >}}
-
-```console
-$ curl --unix-socket /var/run/docker.sock "http://localhost/v{{% param "latest_engine_api_version" %}}/containers/ca5f55cdb/logs?stdout=1"
-Reticulating spline 1...
-Reticulating spline 2...
-Reticulating spline 3...
-Reticulating spline 4...
-Reticulating spline 5...
-```
-
-{{< /tab >}}
 {{< /tabs >}}
 
-## List all images
+## 列出所有镜像
 
-List the images on your Engine, similar to `docker image ls`:
+这个例子展示了如何列出系统中所有的 Docker 镜像。
 
-{{< tabs group="lang" >}}
+{{< tabs >}}
 {{< tab name="Go" >}}
 
 ```go
 package main
 
 import (
-	"context"
-	"fmt"
+    "context"
+    "fmt"
 
-	"github.com/docker/docker/api/types/image"
-	"github.com/docker/docker/client"
+    "github.com/docker/docker/api/types"
+    "github.com/docker/docker/client"
 )
 
 func main() {
-	ctx := context.Background()
-	cli, err := client.NewClientWithOpts(client.FromEnv, client.WithAPIVersionNegotiation())
-	if err != nil {
-		panic(err)
-	}
-	defer cli.Close()
+    ctx := context.Background()
+    cli, err := client.NewClientWithOpts(client.FromEnv, client.WithAPIVersionNegotiation())
+    if err != nil {
+        panic(err)
+    }
+    defer cli.Close()
 
-	images, err := cli.ImageList(ctx, image.ListOptions{})
-	if err != nil {
-		panic(err)
-	}
+    images, err := cli.ImageList(ctx, types.ImageListOptions{})
+    if err != nil {
+        panic(err)
+    }
 
-	for _, image := range images {
-		fmt.Println(image.ID)
-	}
+    for _, image := range images {
+        fmt.Printf("%s\n", image.ID)
+    }
 }
 ```
 
@@ -469,59 +353,44 @@ func main() {
 import docker
 client = docker.from_env()
 for image in client.images.list():
-  print(image.id)
-```
-
-{{< /tab >}}
-{{< tab name="HTTP" >}}
-
-```console
-$ curl --unix-socket /var/run/docker.sock http://localhost/v{{% param "latest_engine_api_version" %}}/images/json
-[{
-  "Id":"sha256:31d9a31e1dd803470c5a151b8919ef1988ac3efd44281ac59d43ad623f275dcd",
-  "ParentId":"sha256:ee4603260daafe1a8c2f3b78fd760922918ab2441cbb2853ed5c439e59c52f96",
-  ...
-}]
+    print(image.id)
 ```
 
 {{< /tab >}}
 {{< /tabs >}}
 
-## Pull an image
+## 拉取镜像
 
-Pull an image, like `docker pull`:
+这个例子展示了如何从 Docker Hub 或其他 registry 拉取镜像。
 
-{{< tabs group="lang" >}}
+{{< tabs >}}
 {{< tab name="Go" >}}
 
 ```go
 package main
 
 import (
-	"context"
-	"io"
-	"os"
+    "context"
+    "io"
+    "os"
 
-	"github.com/docker/docker/api/types/image"
-	"github.com/docker/docker/client"
+    "github.com/docker/docker/api/types/image"
+    "github.com/docker/docker/client"
 )
 
 func main() {
-	ctx := context.Background()
-	cli, err := client.NewClientWithOpts(client.FromEnv, client.WithAPIVersionNegotiation())
-	if err != nil {
-		panic(err)
-	}
-	defer cli.Close()
+    ctx := context.Background()
+    cli, err := client.NewClientWithOpts(client.FromEnv, client.WithAPIVersionNegotiation())
+    if err != nil {
+        panic(err)
+    }
+    defer cli.Close()
 
-	out, err := cli.ImagePull(ctx, "alpine", image.PullOptions{})
-	if err != nil {
-		panic(err)
-	}
-
-	defer out.Close()
-
-	io.Copy(os.Stdout, out)
+    reader, err := cli.ImagePull(ctx, "alpine:latest", image.PullOptions{})
+    if err != nil {
+        panic(err)
+    }
+    io.Copy(os.Stdout, reader)
 }
 ```
 
@@ -531,174 +400,133 @@ func main() {
 ```python
 import docker
 client = docker.from_env()
-image = client.images.pull("alpine")
+image = client.images.pull("alpine:latest")
 print(image.id)
-```
-
-{{< /tab >}}
-{{< tab name="HTTP" >}}
-
-```console
-$ curl --unix-socket /var/run/docker.sock \
-  -X POST "http://localhost/v{{% param "latest_engine_api_version" %}}/images/create?fromImage=alpine"
-{"status":"Pulling from library/alpine","id":"3.1"}
-{"status":"Pulling fs layer","progressDetail":{},"id":"8f13703509f7"}
-{"status":"Downloading","progressDetail":{"current":32768,"total":2244027},"progress":"[\u003e                                                  ] 32.77 kB/2.244 MB","id":"8f13703509f7"}
-...
 ```
 
 {{< /tab >}}
 {{< /tabs >}}
 
-## Pull an image with authentication
+## 带认证信息拉取镜像
 
-Pull an image, like `docker pull`, with authentication:
+这个例子展示了如何使用认证信息从私有 registry 拉取镜像。
 
-> [!NOTE]
->
-> Credentials are sent in the clear. Docker's official registries use
-> HTTPS. Private registries should also be configured to use HTTPS.
-
-{{< tabs group="lang" >}}
+{{< tabs >}}
 {{< tab name="Go" >}}
 
 ```go
 package main
 
 import (
-	"context"
-	"encoding/base64"
-	"encoding/json"
-	"io"
-	"os"
+    "context"
+    "encoding/base64"
+    "encoding/json"
+    "io"
+    "os"
 
-	"github.com/docker/docker/api/types/image"
-	"github.com/docker/docker/api/types/registry"
-	"github.com/docker/docker/client"
+    "github.com/docker/docker/api/types"
+    "github.com/docker/docker/api/types/image"
+    "github.com/docker/docker/client"
 )
 
 func main() {
-	ctx := context.Background()
-	cli, err := client.NewClientWithOpts(client.FromEnv, client.WithAPIVersionNegotiation())
-	if err != nil {
-		panic(err)
-	}
-	defer cli.Close()
+    ctx := context.Background()
+    cli, err := client.NewClientWithOpts(client.FromEnv, client.WithAPIVersionNegotiation())
+    if err != nil {
+        panic(err)
+    }
+    defer cli.Close()
 
-	authConfig := registry.AuthConfig{
-		Username: "username",
-		Password: "password",
-	}
-	encodedJSON, err := json.Marshal(authConfig)
-	if err != nil {
-		panic(err)
-	}
-	authStr := base64.URLEncoding.EncodeToString(encodedJSON)
+    authConfig := types.AuthConfig{
+        Username: "username",
+        Password: "password",
+    }
+    encodedJSON, err := json.Marshal(authConfig)
+    if err != nil {
+        panic(err)
+    }
+    authStr := base64.URLEncoding.EncodeToString(encodedJSON)
 
-	out, err := cli.ImagePull(ctx, "alpine", image.PullOptions{RegistryAuth: authStr})
-	if err != nil {
-		panic(err)
-	}
-
-	defer out.Close()
-	io.Copy(os.Stdout, out)
+    reader, err := cli.ImagePull(ctx, "private-registry.io/username/alpine", image.PullOptions{
+        RegistryAuth: authStr,
+    })
+    if err != nil {
+        panic(err)
+    }
+    io.Copy(os.Stdout, reader)
 }
 ```
 
 {{< /tab >}}
 {{< tab name="Python" >}}
 
-The Python SDK retrieves authentication information from the [credentials
-store](/reference/cli/docker/login/#credential-stores) file and
-integrates with [credential
-helpers](https://github.com/docker/docker-credential-helpers). It's possible to override these credentials, but that's out of
-scope for this example guide. After using `docker login`, the Python SDK
-uses these credentials automatically.
-
 ```python
 import docker
 client = docker.from_env()
-image = client.images.pull("alpine")
+client.login(username='username', password='password')
+image = client.images.pull('private-registry.io/username/alpine')
 print(image.id)
-```
-
-{{< /tab >}}
-{{< tab name="HTTP" >}}
-
-This example leaves the credentials in your shell's history, so consider
-this a naive implementation. The credentials are passed as a Base-64-encoded
-JSON structure.
-
-```console
-$ JSON=$(echo '{"username": "string", "password": "string", "serveraddress": "string"}' | base64)
-
-$ curl --unix-socket /var/run/docker.sock \
-  -H "Content-Type: application/tar"
-  -X POST "http://localhost/v{{% param "latest_engine_api_version" %}}/images/create?fromImage=alpine"
-  -H "X-Registry-Auth"
-  -d "$JSON"
-{"status":"Pulling from library/alpine","id":"3.1"}
-{"status":"Pulling fs layer","progressDetail":{},"id":"8f13703509f7"}
-{"status":"Downloading","progressDetail":{"current":32768,"total":2244027},"progress":"[\u003e                                                  ] 32.77 kB/2.244 MB","id":"8f13703509f7"}
-...
 ```
 
 {{< /tab >}}
 {{< /tabs >}}
 
-## Commit a container
+## 提交容器更改
 
-Commit a container to create an image from its contents:
+这个例子展示了如何将容器的更改保存为新的镜像。这与 `docker commit` 命令类似。
 
-{{< tabs group="lang" >}}
+{{< tabs >}}
 {{< tab name="Go" >}}
 
 ```go
 package main
 
 import (
-	"context"
-	"fmt"
+    "context"
+    "fmt"
 
-	"github.com/docker/docker/api/types/container"
-	"github.com/docker/docker/client"
+    "github.com/docker/docker/api/types/container"
+    "github.com/docker/docker/api/types/image"
+    "github.com/docker/docker/client"
 )
 
 func main() {
-	ctx := context.Background()
-	cli, err := client.NewClientWithOpts(client.FromEnv, client.WithAPIVersionNegotiation())
-	if err != nil {
-		panic(err)
-	}
-	defer cli.Close()
+    ctx := context.Background()
+    cli, err := client.NewClientWithOpts(client.FromEnv, client.WithAPIVersionNegotiation())
+    if err != nil {
+        panic(err)
+    }
+    defer cli.Close()
 
-	createResp, err := cli.ContainerCreate(ctx, &container.Config{
-		Image: "alpine",
-		Cmd:   []string{"touch", "/helloworld"},
-	}, nil, nil, nil, "")
-	if err != nil {
-		panic(err)
-	}
+    createResp, err := cli.ContainerCreate(ctx, &container.Config{
+        Image: "alpine",
+        Cmd:   []string{"touch", "/helloworld"},
+    }, nil, nil, nil, "")
+    if err != nil {
+        panic(err)
+    }
 
-	if err := cli.ContainerStart(ctx, createResp.ID, container.StartOptions{}); err != nil {
-		panic(err)
-	}
+    if err := cli.ContainerStart(ctx, createResp.ID, container.StartOptions{}); err != nil {
+        panic(err)
+    }
 
-	statusCh, errCh := cli.ContainerWait(ctx, createResp.ID, container.WaitConditionNotRunning)
-	select {
-	case err := <-errCh:
-		if err != nil {
-			panic(err)
-		}
-	case <-statusCh:
-	}
+    statusCh, errCh := cli.ContainerWait(ctx, createResp.ID, container.WaitConditionNotRunning)
+    select {
+    case err := <-errCh:
+        if err != nil {
+            panic(err)
+        }
+    case <-statusCh:
+    }
 
-	commitResp, err := cli.ContainerCommit(ctx, createResp.ID, container.CommitOptions{Reference: "helloworld"})
-	if err != nil {
-		panic(err)
-	}
+    commitResp, err := cli.ContainerCommit(ctx, createResp.ID, image.CommitOptions{
+        Reference: "helloworld",
+    })
+    if err != nil {
+        panic(err)
+    }
 
-	fmt.Println(commitResp.ID)
+    fmt.Println(commitResp.ID)
 }
 ```
 
@@ -715,15 +543,8 @@ print(image.id)
 ```
 
 {{< /tab >}}
-{{< tab name="HTTP" >}}
-
-```console
-$ docker run -d alpine touch /helloworld
-0888269a9d584f0fa8fc96b3c0d8d57969ceea3a64acf47cd34eebb4744dbc52
-$ curl --unix-socket /var/run/docker.sock\
-  -X POST "http://localhost/v{{% param "latest_engine_api_version" %}}/commit?container=0888269a9d&repo=helloworld"
-{"Id":"sha256:6c86a5cd4b87f2771648ce619e319f3e508394b5bfc2cdbd2d60f59d52acda6c"}
-```
-
-{{< /tab >}}
 {{< /tabs >}}
+
+这些示例展示了 Docker Engine SDK 的一些基本用法。要了解更多功能，请参考
+[Go SDK](https://godoc.org/github.com/docker/docker/client) 或
+[Python SDK](https://docker-py.readthedocs.io/en/stable/) 的完整文档。

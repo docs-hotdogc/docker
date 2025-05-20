@@ -1,5 +1,5 @@
 ---
-title: API reference by version
+title: API 版本参考
 build:
   render: never
 sidebar:
@@ -10,6 +10,6 @@ cascade:
     layout: default
   - _target:
       path: /reference/api/engine/version/**
-    description: Reference documentation and Swagger (OpenAPI) specification for the Docker Engine API.
+    description: Docker Engine API 的参考文档和 Swagger (OpenAPI) 规范。
     layout: api
 ---

@@ -33,8 +33,8 @@ FROM base AS hugo
 ARG TARGETARCH
 ARG HUGO_VERSION
 WORKDIR /out
-ADD https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_linux-${TARGETARCH}.tar.gz .
-RUN tar xvf hugo_extended_${HUGO_VERSION}_linux-${TARGETARCH}.tar.gz
+COPY hugo-v0.141.0.tar.gz .
+RUN tar xvf hugo-v0.141.0.tar.gz
 
 # build-base is the base stage used for building the site
 FROM base AS build-base

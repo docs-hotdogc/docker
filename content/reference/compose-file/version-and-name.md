@@ -1,30 +1,26 @@
 ---
-title: Version and name top-level elements
-description: Understand when and if to set the version and name top-level element
+title: 版本和名称顶级元素
+description: 了解何时以及是否设置版本和名称顶级元素
 keywords: compose, compose specification, services, compose file reference
 aliases:
  - /compose/compose-file/04-version-and-name/
 weight: 10
 ---
 
-## Version top-level element (obsolete)
+## 版本顶级元素（已废弃）
 
-The top-level `version` property is defined by the Compose Specification for backward compatibility. It is only informative and you'll receive a warning message that it is obsolete if used. 
+顶级 `version` 属性由 Compose 规范定义，用于向后兼容。它仅作为信息提供，如果使用它，您将收到一条警告消息，说明它已废弃。
 
-Compose doesn't use `version` to select an exact schema to validate the Compose file, but
-prefers the most recent schema when it's implemented.
+Compose 不使用 `version` 来选择确切的模式来验证 Compose 文件，而是在实现时优先使用最新的模式。
 
-Compose validates whether it can fully parse the Compose file. If some fields are unknown, typically
-because the Compose file was written with fields defined by a newer version of the Specification, you'll receive a warning message. 
+Compose 会验证是否能够完全解析 Compose 文件。如果某些字段未知，通常是因为 Compose 文件使用了由较新版本的规范定义的字段，您将收到一条警告消息。
 
-## Name top-level element
+## 名称顶级元素
 
-The top-level `name` property is defined by the Compose Specification as the project name to be used if you don't set one explicitly.
-Compose offers a way for you to override this name, and sets a
-default project name to be used if the top-level `name` element is not set.
+顶级 `name` 属性由 Compose 规范定义，如果您没有明确设置项目名称，则使用此名称。
+Compose 提供了一种方式来覆盖此名称，如果未设置顶级 `name` 元素，则设置一个默认的项目名称。
 
-Whenever a project name is defined by top-level `name` or by some custom mechanism, it is exposed for
-[interpolation](interpolation.md) and environment variable resolution as `COMPOSE_PROJECT_NAME`
+每当通过顶级 `name` 或某些自定义机制定义项目名称时，它都会作为 `COMPOSE_PROJECT_NAME` 暴露给[插值](interpolation.md)和环境变量解析
 
 ```yml
 name: myapp
@@ -35,4 +31,4 @@ services:
     command: echo "I'm running ${COMPOSE_PROJECT_NAME}"
 ```
 
-For more information on other ways to name Compose projects, see [Specify a project name](/manuals/compose/how-tos/project-name.md).
+有关命名 Compose 项目的其他方法的更多信息，请参阅[指定项目名称](/manuals/compose/how-tos/project-name.md)。

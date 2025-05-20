@@ -137,7 +137,7 @@ Docker CLI OpenTelemetry:
   requires: Docker Engine [26.1.0](/manuals/engine/release-notes/26.1.md#2610) and later
 docker compose alpha:
   availability: Experimental
-Docker Debug:
+Docker 调试:
   subscription: [Pro, Team, Business]
   requires: Docker Desktop [4.33.0](/manuals/desktop/release-notes.md#4330) and later
 Docker Desktop Archlinux:

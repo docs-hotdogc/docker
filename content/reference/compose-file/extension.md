@@ -1,6 +1,6 @@
 ---
-title: Extensions
-description: Understand how to use extensions
+title: 扩展
+description: 了解如何使用扩展
 keywords: compose, compose specification, extensions, compose file reference
 aliases: 
  - /compose/compose-file/11-extension/
@@ -9,12 +9,12 @@ weight: 80
 
 {{% include "compose/extension.md" %}}
 
-Extensions can also be used with [anchors and aliases](fragments.md).
+扩展也可以与[锚点和别名](fragments.md)一起使用。
 
-They also can be used within any structure in a Compose file where user-defined keys are not expected. 
-Compose uses those to enable experimental features, the same way browsers add support for [custom CSS features](https://www.w3.org/TR/2011/REC-CSS2-20110607/syndata.html#vendor-keywords)
+它们还可以在 Compose 文件中的任何结构中用于不需要用户定义键的地方。
+Compose 使用这些来启用实验性功能，就像浏览器添加对[自定义 CSS 功能](https://www.w3.org/TR/2011/REC-CSS2-20110607/syndata.html#vendor-keywords)的支持一样。
 
-## Example 1
+## 示例 1
 
 ```yml
 x-custom:
@@ -38,7 +38,7 @@ service:
         x-azure-region: "france-central"
 ```
 
-## Example 2
+## 示例 2
 
 ```yml
 x-env: &env
@@ -55,10 +55,10 @@ services:
     image: another-image:latest
 ```
 
-In this example, the environment variables do not belong to either of the services. They’ve been lifted out completely into the `x-env` extension field.
-This defines a new node which contains the environment field. The `&env` YAML anchor is used so both services can reference the extension field’s value as `*env`.
+在此示例中，环境变量不属于任何服务。它们已完全提升到 `x-env` 扩展字段中。
+这定义了一个包含环境字段的新节点。使用 `&env` YAML 锚点，以便两个服务都可以将扩展字段的值引用为 `*env`。
 
-## Example 3
+## 示例 3
 
 ```yml
 x-function: &function
@@ -73,14 +73,14 @@ x-function: &function
      constraints:
        - 'node.platform.os == linux'
 services:
- # Node.js gives OS info about the node (Host)
+ # Node.js 提供有关节点（主机）的 OS 信息
  nodeinfo:
    <<: *function
    image: functions/nodeinfo:latest
    environment:
      no_proxy: "gateway"
      https_proxy: $https_proxy
- # Uses `cat` to echo back response, fastest function to execute.
+ # 使用 `cat` 回显响应，执行最快的函数。
  echoit:
    <<: *function
    image: functions/alpine:health
@@ -90,12 +90,11 @@ services:
      https_proxy: $https_proxy
 ```
 
-The `nodeinfo` and `echoit` services both include the `x-function` extension via the `&function` anchor, then set their specific image and environment. 
+`nodeinfo` 和 `echoit` 服务都通过 `&function` 锚点包含 `x-function` 扩展，然后设置其特定的镜像和环境。
 
-## Example 4 
+## 示例 4
 
-Using [YAML merge](https://yaml.org/type/merge.html) it is also possible to use multiple extensions and share
-and override additional attributes for specific needs:
+使用 [YAML 合并](https://yaml.org/type/merge.html)，还可以使用多个扩展并根据特定需求共享和覆盖其他属性：
 
 ```yml
 x-environment: &default-environment
@@ -113,23 +112,23 @@ services:
 
 > [!NOTE]
 >
-> [YAML merge](https://yaml.org/type/merge.html) only applies to mappings, and can't be used with sequences. 
+> [YAML 合并](https://yaml.org/type/merge.html)仅适用于映射，不能用于序列。
 >
-> In the example above, the environment variables are declared using the `FOO: BAR` mapping syntax, while the sequence syntax `- FOO=BAR` is only valid when no fragments are involved.
+> 在上面的示例中，环境变量使用 `FOO: BAR` 映射语法声明，而序列语法 `- FOO=BAR` 仅在未涉及片段时有效。
 
-## Informative Historical Notes
+## 信息性历史注释
 
-This section is informative. At the time of writing, the following prefixes are known to exist:
+本节仅供参考。在编写时，已知存在以下前缀：
 
-| Prefix     | Vendor/Organization |
-| ---------- | ------------------- |
-| docker     | Docker              |
-| kubernetes | Kubernetes          |
+| 前缀       | 供应商/组织    |
+| ---------- | -------------- |
+| docker     | Docker         |
+| kubernetes | Kubernetes     |
 
-## Specifying byte values
+## 指定字节值
 
-Values express a byte value as a string in `{amount}{byte unit}` format:
-The supported units are `b` (bytes), `k` or `kb` (kilo bytes), `m` or `mb` (mega bytes) and `g` or `gb` (giga bytes).
+值以 `{amount}{byte unit}` 格式的字符串表示字节值：
+支持的单位是 `b`（字节）、`k` 或 `kb`（千字节）、`m` 或 `mb`（兆字节）和 `g` 或 `gb`（吉字节）。
 
 ```text
     2b
@@ -139,11 +138,11 @@ The supported units are `b` (bytes), `k` or `kb` (kilo bytes), `m` or `mb` (mega
     1gb
 ```
 
-## Specifying durations
+## 指定持续时间
 
-Values express a duration as a string in the form of `{value}{unit}`.
-The supported units are `us` (microseconds), `ms` (milliseconds), `s` (seconds), `m` (minutes) and `h` (hours).
-Values can combine multiple values without separator.
+值以 `{value}{unit}` 形式的字符串表示持续时间。
+支持的单位是 `us`（微秒）、`ms`（毫秒）、`s`（秒）、`m`（分钟）和 `h`（小时）。
+值可以组合多个值，无需分隔符。
 
 ```text
   10ms

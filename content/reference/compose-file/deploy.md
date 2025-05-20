@@ -1,6 +1,6 @@
 ---
-title: Compose Deploy Specification
-description: Learn about the Compose Deploy Specification
+title: Compose 部署规范
+description: 了解 Compose 部署规范
 keywords: compose, compose specification, compose file reference, compose deploy specification
 aliases: 
  - /compose/compose-file/deploy/
@@ -9,18 +9,15 @@ weight: 140
 
 {{% include "compose/deploy.md" %}}
 
-## Attributes
+## 属性
 
 ### `endpoint_mode`
 
-`endpoint_mode` specifies a service discovery method for external clients connecting to a service. The Compose Deploy Specification defines two canonical values:
+`endpoint_mode` 指定外部客户端连接到服务的服务发现方法。Compose 部署规范定义了两个规范值：
 
-* `endpoint_mode: vip`: Assigns the service a virtual IP (VIP) that acts as the front end for clients to reach the service
-  on a network. Platform routes requests between the client and nodes running the service, without client knowledge of how
-  many nodes are participating in the service or their IP addresses or ports.
+* `endpoint_mode: vip`：为服务分配一个虚拟 IP（VIP），作为客户端在网络上访问服务的前端。平台在客户端和运行服务的节点之间路由请求，客户端无需知道有多少节点参与服务或其 IP 地址或端口。
 
-* `endpoint_mode: dnsrr`: Platform sets up DNS entries for the service such that a DNS query for the service name returns a
-  list of IP addresses (DNS round-robin), and the client connects directly to one of these.
+* `endpoint_mode: dnsrr`：平台为服务设置 DNS 条目，使得对服务名称的 DNS 查询返回 IP 地址列表（DNS 轮询），客户端直接连接到其中一个。
 
 ```yml
 services:
@@ -36,8 +33,7 @@ services:
 
 ### `labels`
 
-`labels` specifies metadata for the service. These labels are only set on the service and not on any containers for the service.
-This assumes the platform has some native concept of "service" that can match the Compose application model.
+`labels` 指定服务的元数据。这些标签仅设置在服务上，而不是服务的任何容器上。这假设平台具有某种可以匹配 Compose 应用程序模型的"服务"原生概念。
 
 ```yml
 services:
@@ -50,15 +46,15 @@ services:
 
 ### `mode`
 
-`mode` defines the replication model used to run a service or job. Options include:
+`mode` 定义用于运行服务或作业的复制模型。选项包括：
 
-- `global`: Ensures exactly one task continuously runs per physical node until stopped.
-- `replicated`: Continuously runs a specified number of tasks across nodes until stopped (default).
-- `replicated-job`: Executes a defined number of tasks until a completion state (exits with code 0)'.
-   - Total tasks are determined by `replicas`. 
-   - Concurrency can be limited using the `max-concurrent` option (CLI only).
-- `global-job`: Executes one task per physical node with a completion state (exits with code 0).
-   - Automatically runs on new nodes as they are added.
+- `global`：确保每个物理节点上恰好有一个任务持续运行，直到停止。
+- `replicated`：在节点上持续运行指定数量的任务，直到停止（默认）。
+- `replicated-job`：执行定义数量的任务，直到达到完成状态（以代码 0 退出）。
+   - 总任务数由 `replicas` 确定。
+   - 可以使用 `max-concurrent` 选项限制并发性（仅限 CLI）。
+- `global-job`：在每个物理节点上执行一个任务，直到达到完成状态（以代码 0 退出）。
+   - 在添加新节点时自动运行。
 
 ```yml
 services:
@@ -80,19 +76,19 @@ services:
 ```
 
 > [!NOTE] 
-> - Job modes (`replicated-job` and `global-job`) are designed for tasks that complete and exit with code 0.
-> - Completed tasks remain until explicitly removed.
-> - Options like `max-concurrent` for controlling concurrency are supported only via the CLI and are not available in Compose.
+> - 作业模式（`replicated-job` 和 `global-job`）专为完成并以代码 0 退出的任务设计。
+> - 已完成的任务会保留，直到明确删除。
+> - 控制并发性的选项（如 `max-concurrent`）仅通过 CLI 支持，在 Compose 中不可用。
 
-For more detailed information about job options and behavior, see the [Docker CLI documentation](/reference/cli/docker/service/create.md#running-as-a-job)
+有关作业选项和行为的更详细信息，请参阅 [Docker CLI 文档](/reference/cli/docker/service/create.md#running-as-a-job)
 
 ### `placement`
 
-`placement` specifies constraints and preferences for the platform to select a physical node to run service containers.
+`placement` 指定平台选择物理节点运行服务容器的约束和偏好。
 
 #### `constraints`
 
-`constraints` defines a required property the platform's node must fulfill to run the service container. For a further example, see the [CLI reference docs](/reference/cli/docker/service/create.md#constraint).
+`constraints` 定义平台节点必须满足才能运行服务容器的必需属性。有关更多示例，请参阅 [CLI 参考文档](/reference/cli/docker/service/create.md#constraint)。
 
 ```yml
 deploy:
@@ -103,8 +99,7 @@ deploy:
 
 #### `preferences`
 
-`preferences` defines a strategy (currently `spread` is the only supported strategy) to spread tasks evenly 
-over the values of the datacenter node label. For a further example, see the [CLI reference docs](/reference/cli/docker/service/create.md#placement-pref)
+`preferences` 定义一种策略（目前仅支持 `spread` 策略）来在数据中心节点标签的值上均匀分布任务。有关更多示例，请参阅 [CLI 参考文档](/reference/cli/docker/service/create.md#placement-pref)
 
 ```yml
 deploy:
@@ -115,8 +110,7 @@ deploy:
 
 ### `replicas`
 
-If the service is `replicated` (which is the default), `replicas` specifies the number of containers that should be
-running at any given time.
+如果服务是 `replicated`（这是默认值），`replicas` 指定在任何给定时间应该运行的容器数量。
 
 ```yml
 services:
@@ -129,11 +123,10 @@ services:
 
 ### `resources`
 
-`resources` configures physical resource constraints for container to run on platform. Those constraints can be configured
-as:
+`resources` 配置容器在平台上运行的物理资源约束。这些约束可以配置为：
 
-- `limits`: The platform must prevent the container to allocate more.
-- `reservations`: The platform must guarantee the container can allocate at least the configured amount.
+- `limits`：平台必须防止容器分配更多资源。
+- `reservations`：平台必须保证容器至少可以分配配置的数量。
 
 ```yml
 services:
@@ -152,32 +145,32 @@ services:
 
 #### `cpus`
 
-`cpus` configures a limit or reservation for how much of the available CPU resources, as number of cores, a container can use.
+`cpus` 配置容器可以使用的可用 CPU 资源的限制或保留，以核心数表示。
 
 #### `memory`
 
-`memory` configures a limit or reservation on the amount of memory a container can allocate, set as a string expressing a [byte value](extension.md#specifying-byte-values).
+`memory` 配置容器可以分配的内存量限制或保留，设置为表示[字节值](extension.md#specifying-byte-values)的字符串。
 
 #### `pids`
 
-`pids` tunes a container’s PIDs limit, set as an integer.
+`pids` 调整容器的 PIDs 限制，设置为整数。
 
 #### `devices`
 
-`devices` configures reservations of the devices a container can use. It contains a list of reservations, each set as an object with the following parameters: `capabilities`, `driver`, `count`, `device_ids` and `options`.
+`devices` 配置容器可以使用的设备保留。它包含保留列表，每个保留都设置为具有以下参数的对象：`capabilities`、`driver`、`count`、`device_ids` 和 `options`。
 
-Devices are reserved using a list of capabilities, making `capabilities` the only required field. A device must satisfy all the requested capabilities for a successful reservation.
+设备使用功能列表进行保留，使 `capabilities` 成为唯一必需的字段。设备必须满足所有请求的功能才能成功保留。
 
 ##### `capabilities`
 
-`capabilities` are set as a list of strings, expressing both generic and driver specific capabilities.
-The following generic capabilities are recognized today:
+`capabilities` 设置为字符串列表，表示通用和驱动程序特定的功能。
+目前识别以下通用功能：
 
-- `gpu`: Graphics accelerator
-- `tpu`: AI accelerator
+- `gpu`：图形加速器
+- `tpu`：AI 加速器
 
-To avoid name clashes, driver specific capabilities must be prefixed with the driver name.
-For example, reserving an NVIDIA CUDA-enabled accelerator might look like this:
+为避免名称冲突，驱动程序特定的功能必须以驱动程序名称作为前缀。
+例如，保留 NVIDIA CUDA 加速器可能如下所示：
 
 ```yml
 deploy:
@@ -189,7 +182,7 @@ deploy:
 
 ##### `driver`
 
-A different driver for the reserved device(s) can be requested using `driver` field. The value is specified as a string.
+可以使用 `driver` 字段请求保留设备的其他驱动程序。值指定为字符串。
 
 ```yml
 deploy:
@@ -202,7 +195,7 @@ deploy:
 
 ##### `count`
 
-If `count` is set to `all` or not specified, Compose reserves all devices that satisfy the requested capabilities. Otherwise, Compose reserves at least the number of devices specified. The value is specified as an integer.
+如果 `count` 设置为 `all` 或未指定，Compose 保留满足请求功能的所有设备。否则，Compose 至少保留指定数量的设备。值指定为整数。
 
 ```yml
 deploy:
@@ -213,11 +206,11 @@ deploy:
           count: 2
 ```
 
-`count` and `device_ids` fields are exclusive. Compose returns an error if both are specified.
+`count` 和 `device_ids` 字段是互斥的。如果同时指定两者，Compose 将返回错误。
 
 ##### `device_ids`
 
-If `device_ids` is set, Compose reserves devices with the specified IDs provided they satisfy the requested capabilities. The value is specified as a list of strings.
+如果设置了 `device_ids`，Compose 保留具有指定 ID 的设备，前提是它们满足请求的功能。值指定为字符串列表。
 
 ```yml
 deploy:
@@ -228,11 +221,11 @@ deploy:
           device_ids: ["GPU-f123d1c9-26bb-df9b-1c23-4a731f61d8c7"]
 ```
 
-`count` and `device_ids` fields are exclusive. Compose returns an error if both are specified.
+`count` 和 `device_ids` 字段是互斥的。如果同时指定两者，Compose 将返回错误。
 
 ##### `options`
 
-Driver specific options can be set with `options` as key-value pairs.
+可以使用 `options` 设置驱动程序特定的选项作为键值对。
 
 ```yml
 deploy:
@@ -247,17 +240,17 @@ deploy:
 
 ### `restart_policy`
 
-`restart_policy` configures if and how to restart containers when they exit. If `restart_policy` is not set, Compose considers the `restart` field set by the service configuration.
+`restart_policy` 配置容器退出时是否以及如何重启。如果未设置 `restart_policy`，Compose 会考虑服务配置设置的 `restart` 字段。
 
-- `condition`. When set to:
-  - `none`, containers are not automatically restarted regardless of the exit status.
-  - `on-failure`, the container is restarted if it exits due to an error, which manifests as a non-zero exit code.
-  - `any` (default), containers are restarted regardless of the exit status. 
-- `delay`: How long to wait between restart attempts, specified as a [duration](extension.md#specifying-durations). The default is 0, meaning restart attempts can occur immediately.
-- `max_attempts`: The maximum number of failed restart attempts allowed before giving up. (Default: unlimited retries.)
-A failed attempt only counts toward `max_attempts` if the container does not successfully restart within the time defined by `window`.
-For example, if `max_attempts` is set to `2` and the container fails to restart within the window on the first try, Compose continues retrying until two such failed attempts occur, even if that means trying more than twice.
-- `window`: The amount of time to wait after a restart to determine whether it was successful, specified as a [duration](extension.md#specifying-durations) (default: the result is evaluated immediately after the restart).
+- `condition`。当设置为：
+  - `none`，无论退出状态如何，容器都不会自动重启。
+  - `on-failure`，如果容器因错误退出（表现为非零退出代码），则重启容器。
+  - `any`（默认），无论退出状态如何，容器都会重启。
+- `delay`：重启尝试之间等待的时间，指定为[持续时间](extension.md#specifying-durations)。默认为 0，意味着可以立即进行重启尝试。
+- `max_attempts`：在放弃之前允许的最大失败重启尝试次数。（默认：无限重试。）
+  只有在 `window` 定义的时间内容器未能成功重启时，失败的尝试才会计入 `max_attempts`。
+  例如，如果 `max_attempts` 设置为 `2`，并且容器在第一次尝试时未能在窗口内重启，Compose 会继续重试，直到发生两次这样的失败尝试，即使这意味着尝试超过两次。
+- `window`：重启后等待以确定是否成功的时间量，指定为[持续时间](extension.md#specifying-durations)（默认：重启后立即评估结果）。
 
 ```yml
 deploy:
@@ -270,27 +263,25 @@ deploy:
 
 ### `rollback_config`
 
-`rollback_config` configures how the service should be rollbacked in case of a failing update.
+`rollback_config` 配置在更新失败时如何回滚服务。
 
-- `parallelism`: The number of containers to rollback at a time. If set to 0, all containers rollback simultaneously.
-- `delay`: The time to wait between each container group's rollback (default 0s).
-- `failure_action`: What to do if a rollback fails. One of `continue` or `pause` (default `pause`)
-- `monitor`: Duration after each task update to monitor for failure `(ns|us|ms|s|m|h)` (default 0s).
-- `max_failure_ratio`: Failure rate to tolerate during a rollback (default 0).
-- `order`: Order of operations during rollbacks. One of `stop-first` (old task is stopped before starting new one),
-   or `start-first` (new task is started first, and the running tasks briefly overlap) (default `stop-first`).
+- `parallelism`：同时回滚的容器数量。如果设置为 0，所有容器同时回滚。
+- `delay`：每个容器组回滚之间等待的时间（默认 0s）。
+- `failure_action`：如果回滚失败该怎么办。`continue` 或 `pause` 之一（默认 `pause`）。
+- `monitor`：每次任务更新后监控失败的时间 `(ns|us|ms|s|m|h)`（默认 0s）。
+- `max_failure_ratio`：回滚期间可容忍的失败率（默认 0）。
+- `order`：回滚期间的操作顺序。`stop-first`（在启动新任务之前停止旧任务）或 `start-first`（先启动新任务，运行的任务短暂重叠）之一（默认 `stop-first`）。
 
 ### `update_config`
 
-`update_config` configures how the service should be updated. Useful for configuring rolling updates.
+`update_config` 配置如何更新服务。用于配置滚动更新。
 
-- `parallelism`: The number of containers to update at a time.
-- `delay`: The time to wait between updating a group of containers.
-- `failure_action`: What to do if an update fails. One of `continue`, `rollback`, or `pause` (default: `pause`).
-- `monitor`: Duration after each task update to monitor for failure `(ns|us|ms|s|m|h)` (default 0s).
-- `max_failure_ratio`: Failure rate to tolerate during an update.
-- `order`: Order of operations during updates. One of `stop-first` (old task is stopped before starting new one),
-   or `start-first` (new task is started first, and the running tasks briefly overlap) (default `stop-first`).
+- `parallelism`：同时更新的容器数量。
+- `delay`：更新一组容器之间等待的时间。
+- `failure_action`：如果更新失败该怎么办。`continue`、`rollback` 或 `pause` 之一（默认：`pause`）。
+- `monitor`：每次任务更新后监控失败的时间 `(ns|us|ms|s|m|h)`（默认 0s）。
+- `max_failure_ratio`：更新期间可容忍的失败率。
+- `order`：更新期间的操作顺序。`stop-first`（在启动新任务之前停止旧任务）或 `start-first`（先启动新任务，运行的任务短暂重叠）之一（默认 `stop-first`）。
 
 ```yml
 deploy:

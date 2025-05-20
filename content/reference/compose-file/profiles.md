@@ -1,29 +1,26 @@
 ---
-title: Profiles
-description: Learn about profiles
+title: 配置文件
+description: 了解配置文件
 keywords: compose, compose specification, profiles, compose file reference
 aliases: 
  - /compose/compose-file/15-profiles/
 weight: 120
 ---
 
-With profiles you can define a set of active profiles so your Compose application model is adjusted for various usages and environments.
+使用配置文件，您可以定义一组活动配置文件，以便根据各种用途和环境调整 Compose 应用程序模型。
 
-The [services](services.md) top-level element supports a `profiles` attribute to define a list of named profiles. 
-Services without a `profiles` attribute are always enabled. 
+[services](services.md) 顶级元素支持 `profiles` 属性来定义命名配置文件列表。
+没有 `profiles` 属性的服务始终处于启用状态。
 
-A service is ignored by Compose when none of the listed `profiles` match the active ones, unless the service is
-explicitly targeted by a command. In that case its profile is added to the set of active profiles.
+当列出的 `profiles` 中没有与活动配置文件匹配时，Compose 会忽略该服务，除非该服务被命令明确指定为目标。在这种情况下，其配置文件会被添加到活动配置文件集中。
 
 > [!NOTE]
 >
-> All other top-level elements are not affected by `profiles` and are always active.
+> 所有其他顶级元素不受 `profiles` 的影响，始终处于活动状态。
 
-References to other services (by `links`, `extends` or shared resource syntax `service:xxx`) do not
-automatically enable a component that would otherwise have been ignored by active profiles. Instead
-Compose returns an error.
+对其他服务的引用（通过 `links`、`extends` 或共享资源语法 `service:xxx`）不会自动启用原本会被活动配置文件忽略的组件。相反，Compose 会返回错误。
 
-## Illustrative example
+## 示例说明
 
 ```yaml
 services:
@@ -50,22 +47,18 @@ services:
       - debug
 ```
 
-In the above example:
+在上面的示例中：
 
-- If the Compose application model is parsed with no profile enabled, it only contains the `web` service.
-- If the profile `test` is enabled, the model contains the services `test_lib` and `coverage_lib`, and service `web`, which is always enabled.
-- If the profile `debug` is enabled, the model contains both `web` and `debug_lib` services, but not `test_lib` and `coverage_lib`,
-  and as such the model is invalid regarding the `depends_on` constraint of `debug_lib`.
-- If the profiles `debug` and `test` are enabled, the model contains all services; `web`, `test_lib`, `coverage_lib` and `debug_lib`.
-- If Compose is executed with `test_lib` as the explicit service to run, `test_lib` and the `test` profile
-  are active even if `test` profile is not enabled.
-- If Compose is executed with `coverage_lib` as the explicit service to run, the service `coverage_lib` and the
-  profile `test` are active and `test_lib` is pulled in by the `depends_on` constraint.
-- If Compose is executed with `debug_lib` as the explicit service to run, again the model is
-  invalid regarding the `depends_on` constraint of `debug_lib`, since `debug_lib` and `test_lib` have no common `profiles`
-  listed.
-- If Compose is executed with `debug_lib` as the explicit service to run and profile `test` is enabled,
-  profile `debug` is automatically enabled and service `test_lib` is pulled in as a dependency starting both
-  services `debug_lib` and `test_lib`.
+- 如果 Compose 应用程序模型在没有启用任何配置文件的情况下解析，它只包含 `web` 服务。
+- 如果启用了 `test` 配置文件，模型包含 `test_lib` 和 `coverage_lib` 服务，以及始终启用的 `web` 服务。
+- 如果启用了 `debug` 配置文件，模型包含 `web` 和 `debug_lib` 服务，但不包含 `test_lib` 和 `coverage_lib`，
+  因此，关于 `debug_lib` 的 `depends_on` 约束，模型是无效的。
+- 如果同时启用了 `debug` 和 `test` 配置文件，模型包含所有服务：`web`、`test_lib`、`coverage_lib` 和 `debug_lib`。
+- 如果 Compose 以 `test_lib` 作为要运行的明确服务执行，即使未启用 `test` 配置文件，`test_lib` 和 `test` 配置文件也会处于活动状态。
+- 如果 Compose 以 `coverage_lib` 作为要运行的明确服务执行，`coverage_lib` 服务和 `test` 配置文件处于活动状态，并且 `test_lib` 通过 `depends_on` 约束被引入。
+- 如果 Compose 以 `debug_lib` 作为要运行的明确服务执行，由于 `debug_lib` 和 `test_lib` 没有共同的 `profiles` 列表，
+  因此关于 `debug_lib` 的 `depends_on` 约束，模型再次无效。
+- 如果 Compose 以 `debug_lib` 作为要运行的明确服务执行，并且启用了 `test` 配置文件，
+  则 `debug` 配置文件会自动启用，并且 `test_lib` 作为依赖项被引入，从而启动 `debug_lib` 和 `test_lib` 服务。
 
-See how you can use `profiles` in [Docker Compose](/manuals/compose/how-tos/profiles.md).
+有关如何使用 `profiles` 的更多信息，请参阅 [Docker Compose](/manuals/compose/how-tos/profiles.md)。

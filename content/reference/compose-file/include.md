@@ -1,6 +1,6 @@
 ---
-title: Include
-description: Learn about include
+title: 包含
+description: 了解包含功能
 keywords: compose, compose specification, include, compose file reference
 aliases:
  - /compose/compose-file/14-include/
@@ -9,46 +9,40 @@ weight: 110
 
 {{< summary-bar feature_name="Composefile include" >}}
 
-A Compose application can declare dependency on another Compose application. This is useful if:
-- You want to reuse other Compose files.
-- You need to factor out parts of your application model into separate Compose files so they can be managed separately or shared with others.
-- Teams need to keep a Compose file reasonably complicated for the limited amount of resources it has to declare for its own sub-domain within a larger deployment.
+Compose 应用程序可以声明对另一个 Compose 应用程序的依赖。这在以下情况下很有用：
+- 您想要重用其他 Compose 文件。
+- 您需要将应用程序模型的部分内容分解到单独的 Compose 文件中，以便它们可以单独管理或与他人共享。
+- 团队需要保持 Compose 文件的合理复杂性，以便在更大的部署中为其子域声明有限的资源。
 
-The `include` top-level section is used to define the dependency on another Compose application, or sub-domain.
-Each path listed in the `include` section is loaded as an individual Compose application model, with its own project directory, in order to resolve relative paths.
+`include` 顶级部分用于定义对另一个 Compose 应用程序或子域的依赖。
+`include` 部分中列出的每个路径都作为单独的 Compose 应用程序模型加载，具有自己的项目目录，以便解析相对路径。
 
-Once the included Compose application is loaded, all resource definitions are copied into the
-current Compose application model. Compose displays a warning if resource names conflict and doesn't
-try to merge them. To enforce this, `include` is evaluated after the Compose file(s) selected
-to define the Compose application model have been parsed and merged, so that conflicts
-between Compose files are detected.
+一旦包含的 Compose 应用程序被加载，所有资源定义都会被复制到当前 Compose 应用程序模型中。如果资源名称冲突，Compose 会显示警告，并且不会尝试合并它们。为了强制执行这一点，`include` 在定义 Compose 应用程序模型的 Compose 文件被解析和合并之后进行评估，以便检测 Compose 文件之间的冲突。
 
-`include` applies recursively so an included Compose file which declares its own `include` section triggers those other files to be included as well.
+`include` 是递归应用的，因此声明了自己的 `include` 部分的包含 Compose 文件也会触发其他文件的包含。
 
-Any volumes, networks, or other resources pulled in from the included Compose file can be used by the current Compose application for cross-service references. For example:
+从包含的 Compose 文件中引入的任何卷、网络或其他资源都可以被当前 Compose 应用程序用于跨服务引用。例如：
 
 ```yaml
 include:
-  - my-compose-include.yaml  #with serviceB declared
+  - my-compose-include.yaml  #声明了 serviceB
 services:
   serviceA:
     build: .
     depends_on:
-      - serviceB #use serviceB directly as if it was declared in this Compose file
+      - serviceB #直接使用 serviceB，就像它在这个 Compose 文件中声明的一样
 ```
 
-Compose also supports the use of interpolated variables with `include`. It's recommended that you [specify mandatory variables](interpolation.md). For example:
+Compose 还支持在 `include` 中使用插值变量。建议您[指定必需变量](interpolation.md)。例如：
 
 ```text
 include:
   -${INCLUDE_PATH:?FOO}/compose.yaml
 ```
 
-## Short syntax
+## 短语法
 
-The short syntax only defines paths to other Compose files. The file is loaded with the parent
-folder as the project directory, and an optional `.env` file that is loaded to define any variables' default values
-by interpolation. The local project's environment can override those values.
+短语法仅定义其他 Compose 文件的路径。文件以父文件夹作为项目目录加载，并加载可选的 `.env` 文件以通过插值定义任何变量的默认值。本地项目的环境可以覆盖这些值。
 
 ```yaml
 include:
@@ -58,18 +52,14 @@ include:
 services:
   webapp:
     depends_on:
-      - included-service # defined by another_domain
+      - included-service # 由 another_domain 定义
 ```
 
-In the previous example, both `../commons/compose.yaml` and
-`../another_domain/compose.yaml` are loaded as individual Compose projects. Relative paths
-in Compose files being referred by `include` are resolved relative to their own Compose
-file path, not based on the local project's directory. Variables are interpolated using values set in the optional
-`.env` file in same folder and are overridden by the local project's environment.
+在前面的示例中，`../commons/compose.yaml` 和 `../another_domain/compose.yaml` 都作为单独的 Compose 项目加载。被 `include` 引用的 Compose 文件中的相对路径是相对于它们自己的 Compose 文件路径解析的，而不是基于本地项目的目录。变量使用同一文件夹中可选的 `.env` 文件中设置的值进行插值，并被本地项目的环境覆盖。
 
-## Long syntax
+## 长语法
 
-The long syntax offers more control over the sub-project parsing:
+长语法提供了对子项目解析的更多控制：
 
 ```yaml
 include:
@@ -80,13 +70,12 @@ include:
 
 ### `path`
 
-`path` is required and defines the location of the Compose file(s) to be parsed and included into the
-local Compose model.
+`path` 是必需的，它定义了要解析并包含到本地 Compose 模型中的 Compose 文件的位置。
 
-`path` can be set as:
+`path` 可以设置为：
 
-- A string: When using a single Compose file.
-- A list of strings: When multiple Compose files need to be [merged together](merge.md) to define the Compose model for the local application.
+- 字符串：当使用单个 Compose 文件时。
+- 字符串列表：当需要[合并多个 Compose 文件](merge.md)来定义本地应用程序的 Compose 模型时。
 
 ```yaml
 include:
@@ -97,17 +86,13 @@ include:
 
 ### `project_directory`
 
-`project_directory` defines a base path to resolve relative paths set in the Compose file. It defaults to
-the directory of the included Compose file.
+`project_directory` 定义了用于解析 Compose 文件中设置的相对路径的基本路径。它默认为包含的 Compose 文件的目录。
 
 ### `env_file`
 
-`env_file` defines an environment file(s) to use to define default values when interpolating variables
-in the Compose file being parsed. It defaults to `.env` file in the `project_directory` for the Compose
-file being parsed.
+`env_file` 定义了在解析 Compose 文件时用于通过插值定义变量默认值的环境文件。它默认为正在解析的 Compose 文件的 `project_directory` 中的 `.env` 文件。
 
-`env_file` can be set to either a string or a list of strings when multiple environment files need to be merged
-to define a project environment.
+当需要合并多个环境文件来定义项目环境时，`env_file` 可以设置为字符串或字符串列表。
 
 ```yaml
 include:
@@ -117,9 +102,8 @@ include:
        - ../another/dev.env
 ```
 
-The local project's environment has precedence over the values set by the Compose file, so that the local project can
-override values for customization.
+本地项目的环境优先于 Compose 文件设置的值，因此本地项目可以覆盖值以进行自定义。
 
-## Additional resources
+## 其他资源
 
-For more information on using `include`, see [Working with multiple Compose files](/manuals/compose/how-tos/multiple-compose-files/_index.md)
+有关使用 `include` 的更多信息，请参阅[使用多个 Compose 文件](/manuals/compose/how-tos/multiple-compose-files/_index.md)

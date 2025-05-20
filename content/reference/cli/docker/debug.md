@@ -7,4 +7,4 @@ aliases:
 - /engine/reference/commandline/debug/
 ---
 
-{{< summary-bar feature_name="Docker Debug" >}}
+{{< summary-bar feature_name="Docker 调试" >}}

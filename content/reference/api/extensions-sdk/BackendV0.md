@@ -1,19 +1,19 @@
 ---
-title: "Interface: BackendV0"
-description: Docker extension API reference
-keywords: Docker, extensions, sdk, API, reference
+title: "接口: BackendV0"
+description: Docker 扩展 API 参考文档
+keywords: Docker, 扩展, sdk, API, 参考
 aliases:
  - /desktop/extensions-sdk/dev/api/reference/interfaces/BackendV0/
  - /extensions/extensions-sdk/dev/api/reference/interfaces/BackendV0/
 ---
 
-## Container Methods
+## 容器方法
 
 ### execInContainer
 
 ▸ **execInContainer**(`container`, `cmd`): `Promise`<[`ExecResultV0`](ExecResultV0.md)\>
 
-Executes a command inside a container.
+在容器内执行命令。
 
 ```typescript
 const output = await window.ddClient.backend.execInContainer(container, cmd);
@@ -23,28 +23,28 @@ console.log(output);
 
 > [!WARNING]
 >
-> It will be removed in a future version.
+> 此方法将在未来版本中移除。
 
-#### Parameters
+#### 参数
 
-| Name | Type | Description |
+| 名称 | 类型 | 描述 |
 | :------ | :------ | :------ |
-| `container` | `string` | - |
-| `cmd` | `string` | The command to be executed. |
+| `container` | `string` | 容器标识符 |
+| `cmd` | `string` | 要执行的命令 |
 
-#### Returns
+#### 返回值
 
 `Promise`<[`ExecResultV0`](ExecResultV0.md)\>
 
 ___
 
-## HTTP Methods
+## HTTP 方法
 
 ### get
 
 ▸ **get**(`url`): `Promise`<`unknown`\>
 
-Performs an HTTP GET request to a backend service.
+向后端服务发送 HTTP GET 请求。
 
 ```typescript
 window.ddClient.backend
@@ -54,15 +54,15 @@ window.ddClient.backend
 
 > [!WARNING]
 >
-> It will be removed in a future version. Use [get](HttpService.md#get) instead.
+> 此方法将在未来版本中移除。请使用 [get](HttpService.md#get) 代替。
 
-#### Parameters
+#### 参数
 
-| Name | Type | Description |
+| 名称 | 类型 | 描述 |
 | :------ | :------ | :------ |
-| `url` | `string` | The URL of the backend service. |
+| `url` | `string` | 后端服务的 URL |
 
-#### Returns
+#### 返回值
 
 `Promise`<`unknown`\>
 
@@ -72,7 +72,7 @@ ___
 
 ▸ **post**(`url`, `data`): `Promise`<`unknown`\>
 
-Performs an HTTP POST request to a backend service.
+向后端服务发送 HTTP POST 请求。
 
 ```typescript
 window.ddClient.backend
@@ -82,16 +82,16 @@ window.ddClient.backend
 
 > [!WARNING]
 >
-> It will be removed in a future version. Use [post](HttpService.md#post) instead.
+> 此方法将在未来版本中移除。请使用 [post](HttpService.md#post) 代替。
 
-#### Parameters
+#### 参数
 
-| Name | Type | Description |
+| 名称 | 类型 | 描述 |
 | :------ | :------ | :------ |
-| `url` | `string` | The URL of the backend service. |
-| `data` | `any` | The body of the request. |
+| `url` | `string` | 后端服务的 URL |
+| `data` | `any` | 请求体数据 |
 
-#### Returns
+#### 返回值
 
 `Promise`<`unknown`\>
 
@@ -101,7 +101,7 @@ ___
 
 ▸ **put**(`url`, `data`): `Promise`<`unknown`\>
 
-Performs an HTTP PUT request to a backend service.
+向后端服务发送 HTTP PUT 请求。
 
 ```typescript
 window.ddClient.backend
@@ -111,16 +111,16 @@ window.ddClient.backend
 
 > [!WARNING]
 > 
-> It will be removed in a future version. Use [put](HttpService.md#put) instead.
+> 此方法将在未来版本中移除。请使用 [put](HttpService.md#put) 代替。
 
-#### Parameters
+#### 参数
 
-| Name | Type | Description |
+| 名称 | 类型 | 描述 |
 | :------ | :------ | :------ |
-| `url` | `string` | The URL of the backend service. |
-| `data` | `any` | The body of the request. |
+| `url` | `string` | 后端服务的 URL |
+| `data` | `any` | 请求体数据 |
 
-#### Returns
+#### 返回值
 
 `Promise`<`unknown`\>
 
@@ -130,7 +130,7 @@ ___
 
 ▸ **patch**(`url`, `data`): `Promise`<`unknown`\>
 
-Performs an HTTP PATCH request to a backend service.
+向后端服务发送 HTTP PATCH 请求。
 
 ```typescript
 window.ddClient.backend
@@ -140,16 +140,16 @@ window.ddClient.backend
 
 > [!WARNING]
 >
-> It will be removed in a future version. Use [patch](HttpService.md#patch) instead.
+> 此方法将在未来版本中移除。请使用 [patch](HttpService.md#patch) 代替。
 
-#### Parameters
+#### 参数
 
-| Name | Type | Description |
+| 名称 | 类型 | 描述 |
 | :------ | :------ | :------ |
-| `url` | `string` | The URL of the backend service. |
-| `data` | `any` | The body of the request. |
+| `url` | `string` | 后端服务的 URL |
+| `data` | `any` | 请求体数据 |
 
-#### Returns
+#### 返回值
 
 `Promise`<`unknown`\>
 
@@ -159,7 +159,7 @@ ___
 
 ▸ **delete**(`url`): `Promise`<`unknown`\>
 
-Performs an HTTP DELETE request to a backend service.
+向后端服务发送 HTTP DELETE 请求。
 
 ```typescript
 window.ddClient.backend
@@ -169,15 +169,15 @@ window.ddClient.backend
 
 > [!WARNING]
 >
-> It will be removed in a future version. Use [delete](HttpService.md#delete) instead.
+> 此方法将在未来版本中移除。请使用 [delete](HttpService.md#delete) 代替。
 
-#### Parameters
+#### 参数
 
-| Name | Type | Description |
+| 名称 | 类型 | 描述 |
 | :------ | :------ | :------ |
-| `url` | `string` | The URL of the backend service. |
+| `url` | `string` | 后端服务的 URL |
 
-#### Returns
+#### 返回值
 
 `Promise`<`unknown`\>
 
@@ -187,7 +187,7 @@ ___
 
 ▸ **head**(`url`): `Promise`<`unknown`\>
 
-Performs an HTTP HEAD request to a backend service.
+向后端服务发送 HTTP HEAD 请求。
 
 ```typescript
 window.ddClient.backend
@@ -197,15 +197,15 @@ window.ddClient.backend
 
 > [!WARNING]
 >
-> It will be removed in a future version. Use [head](HttpService.md#head) instead.
+> 此方法将在未来版本中移除。请使用 [head](HttpService.md#head) 代替。
 
-#### Parameters
+#### 参数
 
-| Name | Type | Description |
+| 名称 | 类型 | 描述 |
 | :------ | :------ | :------ |
-| `url` | `string` | The URL of the backend service. |
+| `url` | `string` | 后端服务的 URL |
 
-#### Returns
+#### 返回值
 
 `Promise`<`unknown`\>
 
@@ -215,7 +215,7 @@ ___
 
 ▸ **request**(`config`): `Promise`<`unknown`\>
 
-Performs an HTTP request to a backend service.
+向后端服务发送 HTTP 请求。
 
 ```typescript
 window.ddClient.backend
@@ -225,28 +225,28 @@ window.ddClient.backend
 
 > [!WARNING]
 >
-> It will be removed in a future version. Use [request](HttpService.md#request) instead.
+> 此方法将在未来版本中移除。请使用 [request](HttpService.md#request) 代替。
 
-#### Parameters
+#### 参数
 
-| Name | Type | Description |
+| 名称 | 类型 | 描述 |
 | :------ | :------ | :------ |
-| `config` | [`RequestConfigV0`](RequestConfigV0.md) | The URL of the backend service. |
+| `config` | [`RequestConfigV0`](RequestConfigV0.md) | HTTP 请求配置 |
 
-#### Returns
+#### 返回值
 
 `Promise`<`unknown`\>
 
 ___
 
-## VM Methods
+## 虚拟机方法
 
 ### execInVMExtension
 
 ▸ **execInVMExtension**(`cmd`): `Promise`<[`ExecResultV0`](ExecResultV0.md)\>
 
-Executes a command inside the backend container.
-If your extensions ships with additional binaries that should be run inside the backend container you can use the `execInVMExtension` function.
+在后端容器内执行命令。
+如果您的扩展包含需要在后端容器中运行的额外二进制文件，您可以使用 `execInVMExtension` 函数。
 
 ```typescript
 const output = await window.ddClient.backend.execInVMExtension(
@@ -258,15 +258,15 @@ console.log(output);
 
 > [!WARNING]
 >
-> It will be removed in a future version. Use [exec](ExtensionCli.md#exec) instead.
+> 此方法将在未来版本中移除。请使用 [exec](ExtensionCli.md#exec) 代替。
 
-#### Parameters
+#### 参数
 
-| Name | Type | Description |
+| 名称 | 类型 | 描述 |
 | :------ | :------ | :------ |
-| `cmd` | `string` | The command to be executed. |
+| `cmd` | `string` | 要执行的命令 |
 
-#### Returns
+#### 返回值
 
 `Promise`<[`ExecResultV0`](ExecResultV0.md)\>
 
@@ -276,7 +276,7 @@ ___
 
 ▸ **spawnInVMExtension**(`cmd`, `args`, `callback`): `void`
 
-Returns a stream from the command executed in the backend container.
+在后端容器中执行命令并返回命令的流。
 
 ```typescript
 window.ddClient.spawnInVMExtension(
@@ -284,7 +284,7 @@ window.ddClient.spawnInVMExtension(
   [`arg1`, `arg2`],
   (data: any, err: any) => {
     console.log(data.stdout, data.stderr);
-    // Once the command exits we get the status code
+    // 命令退出时我们会得到状态码
     if (data.code) {
       console.log(data.code);
     }
@@ -294,16 +294,16 @@ window.ddClient.spawnInVMExtension(
 
 > [!WARNING]
 >
-> It will be removed in a future version.
+> 此方法将在未来版本中移除。
 
-#### Parameters
+#### 参数
 
-| Name | Type | Description |
+| 名称 | 类型 | 描述 |
 | :------ | :------ | :------ |
-| `cmd` | `string` | The command to be executed. |
-| `args` | `string`[] | The arguments of the command to execute. |
-| `callback` | (`data`: `any`, `error`: `any`) => `void` | The callback function where to listen from the command output data and errors. |
+| `cmd` | `string` | 要执行的命令 |
+| `args` | `string`[] | 要执行的命令的参数 |
+| `callback` | (`data`: `any`, `error`: `any`) => `void` | 用于监听命令输出数据和错误的回调函数 |
 
-#### Returns
+#### 返回值
 
 `void`

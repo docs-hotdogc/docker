@@ -1,26 +1,25 @@
 ---
-title: Secrets top-level elements
-description: Explore all the attributes the secrets top-level element can have.
+title: Secrets 顶级元素
+description: 探索 secrets 顶级元素可以具有的所有属性。
 keywords: compose, compose specification, secrets, compose file reference
 aliases: 
  - /compose/compose-file/09-secrets/
 weight: 60
 ---
 
-Secrets are a flavor of [Configs](configs.md) focusing on sensitive data, with specific constraint for this usage. 
+Secrets 是 [Configs](configs.md) 的一种变体，专注于敏感数据，对此用途有特定的约束。
 
-Services can only access secrets when explicitly granted by a [`secrets` attribute](services.md#secrets) within the `services` top-level element.
+服务只有在 `services` 顶级元素中的 [`secrets` 属性](services.md#secrets)明确授予访问权限时才能访问 secrets。
 
-The top-level `secrets` declaration defines or references sensitive data that is granted to the services in your Compose
-application. The source of the secret is either `file` or `environment`.
+顶级 `secrets` 声明定义或引用授予 Compose 应用程序中服务的敏感数据。secret 的来源可以是 `file` 或 `environment`。
 
-- `file`: The secret is created with the contents of the file at the specified path.
-- `environment`: The secret is created with the value of an environment variable on the host.
+- `file`：secret 使用指定路径处文件的内容创建。
+- `environment`：secret 使用主机上环境变量的值创建。
 
-## Example 1
+## 示例 1
 
-`server-certificate` secret is created as `<project_name>_server-certificate` when the application is deployed,
-by registering content of the `server.cert` as a platform secret.
+`server-certificate` secret 在应用程序部署时创建为 `<project_name>_server-certificate`，
+通过将 `server.cert` 的内容注册为平台 secret。
 
 ```yml
 secrets:
@@ -28,10 +27,10 @@ secrets:
     file: ./server.cert
 ```
 
-## Example 2 
+## 示例 2
 
-`token` secret  is created as `<project_name>_token` when the application is deployed,
-by registering the content of the `OAUTH_TOKEN` environment variable as a platform secret.
+`token` secret 在应用程序部署时创建为 `<project_name>_token`，
+通过将 `OAUTH_TOKEN` 环境变量的内容注册为平台 secret。
 
 ```yml
 secrets:
@@ -39,6 +38,6 @@ secrets:
     environment: "OAUTH_TOKEN"
 ```
 
-## Additional resources
+## 其他资源
 
-For more information, see [How to use secrets in Compose](/manuals/compose/how-tos/use-secrets.md).
+有关更多信息，请参阅[如何在 Compose 中使用 secrets](/manuals/compose/how-tos/use-secrets.md)。
